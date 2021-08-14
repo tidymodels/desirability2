@@ -1,0 +1,29 @@
+Package: desirability2
+Title: Desirability Functions for Multiparameter Optimization
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Max",
+             family = "Kuhn",
+             role = "cre",
+             email = "max@rstudio.com",
+             comment = c(ORCID = "0000-0003-2402-136X")),
+      person(given = "RStudio",
+             role = "cph"))
+Description: Desirability functions <doi:10.1080/00224065.1980.11980968> for 
+    easy use within `dplyr` pipelines.
+License: MIT + file LICENSE
+Imports: 
+    purrr,
+    rlang,
+    tibble,
+    tidyselect
+Suggests: 
+    covr,
+    dplyr,
+    ggplot2,
+    spelling,
+    testthat
+Encoding: UTF-8
+Language: en-US
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
