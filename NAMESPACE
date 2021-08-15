@@ -2,3 +2,5 @@
 
 export(d_max)
 export(d_max_select)
+export(d_min)
+export(d_overall)

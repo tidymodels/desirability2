@@ -3,9 +3,12 @@
 \name{inline_desirability}
 \alias{inline_desirability}
 \alias{d_max}
+\alias{d_min}
 \title{Desirability functions for in-line computations}
 \usage{
 d_max(x, low, high, scale = 1, missing = 1)
+
+d_min(x, low, high, scale = 1, missing = 1)
 }
 \arguments{
 \item{x}{A vector of data to compute the desirability function}
@@ -62,5 +65,5 @@ Derringer, G. and Suich, R. (1980), Simultaneous Optimization of
 Several Response Variables. \emph{Journal of Quality Technology}, 12, 214-219.
 }
 \seealso{
-\code{\link[=d_max_select]{d_max_select()}}
+\code{\link[=d_max_select]{d_max_select()}}, \code{\link[=d_overall]{d_overall()}}
 }

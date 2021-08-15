@@ -18,7 +18,7 @@
 #' defines how missing values in `x` are mapped to the desirability score.
 #' @return A numeric vector on `[0, 1]` where larger values are more
 #' desirable.
-#' @seealso [d_max_select()]
+#' @seealso [d_max_select()], [d_overall()]
 #' @references Derringer, G. and Suich, R. (1980), Simultaneous Optimization of
 #' Several Response Variables. _Journal of Quality Technology_, 12, 214-219.
 #' @export
@@ -50,4 +50,10 @@
 #'   ylab("Desirability")
 d_max <- function(x, low, high, scale = 1, missing = 1) {
   .comp_max(x, low, high, scale, missing)
+}
+
+#' @rdname inline_desirability
+#' @export
+d_min <- function(x, low, high, scale = 1, missing = 1) {
+  .comp_min(x, low, high, scale, missing)
 }

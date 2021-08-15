@@ -5,7 +5,7 @@
 \alias{classification_results}
 \title{Classification results}
 \source{
-See the \code{example-data} director in the package with code that is a variation
+See the \code{example-data} directory in the package with code that is a variation
 of the analysis shown at \url{https://www.tidymodels.org/start/case-study/}.
 }
 \value{
