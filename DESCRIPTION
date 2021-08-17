@@ -22,7 +22,7 @@ Suggests:
     dplyr,
     ggplot2,
     spelling,
-    testthat
+    testthat (>= 3.0.0)
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
@@ -30,3 +30,4 @@ RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)
 LazyData: true
+Config/testthat/edition: 3
