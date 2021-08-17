@@ -43,7 +43,7 @@
   out[x < min(values) & !is.na(x)] <- 0
   out[x > max(values) & !is.na(x)] <- 1
 
-  middle <- x < max(values) & x > min(values) & !is.na(x)
+  middle <- x <= max(values) & x >= min(values) & !is.na(x)
   x_mid <- x[middle]
   out[middle] <- stats::approx(values, d, xout = x_mid)$y
 

@@ -18,7 +18,8 @@
 #' @param missing A single numeric value on `[0, 1]` (or `NA_real_`) that
 #' defines how missing values in `x` are mapped to the desirability score.
 #' @param x_vals,desirability Numeric vectors of the same length that define the
-#' desirability results at specific values of `x`.
+#' desirability results at specific values of `x`. Values below and above the
+#' data in `x_vals` are given values of zero and one, respectively.
 #' @param categories A named list of desirability values that match all
 #' possible categories to specific desirability values.
 #' @return A numeric vector on `[0, 1]` where larger values are more

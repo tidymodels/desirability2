@@ -3,8 +3,8 @@
 test_that('D&E examples page 218', {
   expect_equal(d_max(129.5, 120, 170), .189, tolerance = .01)           # pico
   expect_equal(d_max(1300, 1000, 1300), 1, tolerance = .01)             # modulus
-  # expect_equal(d_target(465.7, 400, 500, 600), 0.656, tolerance = .01)  # elongation
-  # expect_equal(d_target(68, 67.5, 75), 0.932, tolerance = .01)          # hardness
+  expect_equal(d_target(465.7, 400, 500, 600), 0.656, tolerance = .01)  # elongation
+  expect_equal(d_target(68, 60, 67.5, 75), 0.932, tolerance = .01)      # hardness
 })
 
 
@@ -17,7 +17,7 @@ test_that('correct values', {
   expect_equal(
     d_max(x, .1, .9),
     c(0, 0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1)
-    )
+  )
   expect_equal(
     d_max(x, 0, 1),
     c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
@@ -54,6 +54,49 @@ test_that('correct values', {
     tolerance = 0.1
   )
 
+  # ------------------------------------------------------------------------------
+
+  expect_equal(
+    d_target(x, .1, .3, .9),
+    c(0, 0, 0.5, 1, 0.8333, 0.6667, 0.5, 0.3333, 0.1667, 0, 0),
+    tolerance = 0.1
+  )
+  expect_equal(
+    d_target(x, .1, .3, .9, 1/2, 3),
+    c(0, 0, 0.7071, 1, 0.5787, 0.2963, 0.125, 0.037, 0.0046, 0, 0),
+    tolerance = 0.1
+  )
+
+  # ------------------------------------------------------------------------------
+
+  x_points <- (1:5)/5
+  d_points <- c(0.36, 0.64, 0.84, 0.96, 1)
+  expect_equal(
+    d_custom(x, x_points, d_points),
+    c(0, 0, 0.36, 0.5, 0.64, 0.74, 0.84, 0.9, 0.96, 0.98, 1),
+    tolerance = 0.1
+  )
+
+  # ------------------------------------------------------------------------------
+
+  expect_equal(
+    d_box(x, 0.2, .7),
+    c(0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0),
+    tolerance = 0.1
+  )
+
+  # ------------------------------------------------------------------------------
+
+  lvls <- (1:5)/5
+  names(lvls) <- month.abb[2:6]
+  expect_equal(
+    d_category(month.abb[2:4], lvls),
+    c(0.2, 0.4, 0.6)
+  )
+  # expect_equal(
+  #   d_category(month.abb[1:5], lvls),
+  #   c(NA_real_, 0.2, 0.4, 0.6, NA_real_)
+  # )
 })
 
 test_that('missing values', {
