@@ -21,7 +21,8 @@ desirability.}
 \item{high}{Single numeric values that define the active ranges of
 desirability.}
 
-\item{scale}{A single numeric value to rescale the desirability function.}
+\item{scale}{A single numeric value to rescale the
+desirability function.}
 
 \item{missing}{A single numeric value on \verb{[0, 1]} (or \code{NA_real_}) that
 defines how missing values in \code{x} are mapped to the desirability score.}
