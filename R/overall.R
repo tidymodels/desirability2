@@ -52,8 +52,8 @@ d_overall <- function(..., geometric = TRUE, tolerance = 0) {
   res
 }
 
-geomean = function(x, na.rm = TRUE) {
-  if (any(x <= 0)) {
+geomean <- function(x, na.rm = TRUE) {
+  if (any(x[!is.na(x)] <= 0)) {
     return(0)
   }
   exp(sum(log(x), na.rm = na.rm) / sum(!is.na(x)))
