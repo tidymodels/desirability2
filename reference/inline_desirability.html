@@ -42,8 +42,8 @@
 <meta property="og:title" content="Desirability functions for in-line computations — inline_desirability" />
 <meta property="og:description" content="Desirability functions map some input to a [0, 1] scale where zero is
 unacceptable and one is most desirable. The mapping depends on the situation.
-d_max() increases desirability with the input while d_min() does the
-opposite.
+For example, d_max() increases desirability with the input while d_min()
+does the opposite.
 Currently, only the desirability functions defined by Derringer and Suich
 (1980) are implemented." />
 
@@ -116,8 +116,8 @@ Currently, only the desirability functions defined by Derringer and Suich
     <div class="ref-description">
     <p>Desirability functions map some input to a <code>[0, 1]</code> scale where zero is
 unacceptable and one is most desirable. The mapping depends on the situation.
-<code>d_max()</code> increases desirability with the input while <code>d_min()</code> does the
-opposite.</p>
+For example, <code>d_max()</code> increases desirability with the input while <code>d_min()</code>
+does the opposite.</p>
 <p>Currently, only the desirability functions defined by Derringer and Suich
 (1980) are implemented.</p>
     </div>
@@ -167,12 +167,14 @@ defines how missing values in <code>x</code> are mapped to the desirability scor
     <tr>
       <th>x_vals, desirability</th>
       <td><p>Numeric vectors of the same length that define the
-desirability results at specific values of <code>x</code>.</p></td>
+desirability results at specific values of <code>x</code>. Values below and above the
+data in <code>x_vals</code> are given values of zero and one, respectively.</p></td>
     </tr>
     <tr>
       <th>categories</th>
       <td><p>A named list of desirability values that match all
-possible categories to specific desirability values.</p></td>
+possible categories to specific desirability values. Data that are not
+included in <code>categories</code> are given the value in <code>missing</code>.</p></td>
     </tr>
     </table>
 
