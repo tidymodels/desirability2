@@ -43,10 +43,12 @@ desirability function.}
 defines how missing values in \code{x} are mapped to the desirability score.}
 
 \item{x_vals, desirability}{Numeric vectors of the same length that define the
-desirability results at specific values of \code{x}.}
+desirability results at specific values of \code{x}. Values below and above the
+data in \code{x_vals} are given values of zero and one, respectively.}
 
 \item{categories}{A named list of desirability values that match all
-possible categories to specific desirability values.}
+possible categories to specific desirability values. Data that are not
+included in \code{categories} are given the value in \code{missing}.}
 }
 \value{
 A numeric vector on \verb{[0, 1]} where larger values are more
@@ -55,8 +57,8 @@ desirable.
 \description{
 Desirability functions map some input to a \verb{[0, 1]} scale where zero is
 unacceptable and one is most desirable. The mapping depends on the situation.
-\code{d_max()} increases desirability with the input while \code{d_min()} does the
-opposite.
+For example, \code{d_max()} increases desirability with the input while \code{d_min()}
+does the opposite.
 
 Currently, only the desirability functions defined by Derringer and Suich
 (1980) are implemented.

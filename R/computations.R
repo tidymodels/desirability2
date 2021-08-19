@@ -1,6 +1,7 @@
 .comp_max <- function(x, low, high, scale, missing) {
-  # TODO check for numeric
-  # TODO check range for missing
+  check_unit_range(missing)
+  check_numeric(x)
+
   out <- rep(missing, length(x))
   out[x < low & !is.na(x)] <- 0
   out[x > high & !is.na(x)] <- 1
@@ -10,8 +11,8 @@
 }
 
 .comp_min <- function(x, low, high, scale, missing) {
-  # TODO check for numeric
-  # TODO check range for missing
+  check_unit_range(missing)
+  check_numeric(x)
   out <- rep(missing, length(x))
   out[x < low & !is.na(x)] <- 1
   out[x > high & !is.na(x)] <- 0
@@ -22,6 +23,9 @@
 
 
 .comp_target <- function(x, low, target, high, scale_low, scale_high, missing) {
+  check_unit_range(missing)
+  check_numeric(x)
+
   out <- rep(missing, length(x))
 
   out[(x < low | x > high) &  !is.na(x)] <- 0
@@ -35,6 +39,10 @@
 
 
 .comp_custom <- function(x, values, d, missing) {
+  check_unit_range(missing)
+  check_unit_range(d)
+  check_numeric(x)
+
   ord <- order(values)
   values <- values[ord]
   d <- d[ord]
@@ -52,6 +60,8 @@
 
 
 .comp_box <- function(x, low, high, missing) {
+  check_numeric(x)
+  check_unit_range(missing)
   out <- rep(missing, length(x))
   out[x < low | x > high & !is.na(x)] <- 0
   out[x >= low & x <= high & !is.na(x)] <- 1
@@ -61,8 +71,11 @@
 
 
 .comp_category <- function(x, values, missing) {
+  check_categorical(x)
+  check_unit_range(missing)
+  check_unit_range(values)
 
-  # check value names and values, make consisten factors when needed
+  # make consistent factors when needed, check names, better missing handling
 
   values <- tibble::tibble(value = names(values), d = unname(values))
   dat <- tibble::tibble(value = x, order = seq_along(x))

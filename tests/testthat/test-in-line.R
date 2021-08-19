@@ -100,10 +100,10 @@ test_that('correct values', {
 })
 
 test_that('missing values', {
-  expect_equal(d_max(NA, 1, 2, missing = NA_real_), NA_real_)
-  expect_equal(d_max(NA, 1, 2, missing = .1), .1)
+  expect_equal(d_max(NA_real_, 1, 2, missing = NA_real_), NA_real_)
+  expect_equal(d_max(NA_real_, 1, 2, missing = .1), .1)
 
-  expect_equal(d_min(NA, 1, 2, missing = NA_real_), NA_real_)
-  expect_equal(d_min(NA, 1, 2, missing = .1), .1)
+  expect_equal(d_min(NA_real_, 1, 2, missing = NA_real_), NA_real_)
+  expect_equal(d_min(NA_real_, 1, 2, missing = .1), .1)
 
 })

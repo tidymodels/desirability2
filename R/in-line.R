@@ -4,8 +4,8 @@
 #'
 #' Desirability functions map some input to a `[0, 1]` scale where zero is
 #' unacceptable and one is most desirable. The mapping depends on the situation.
-#' `d_max()` increases desirability with the input while `d_min()` does the
-#' opposite.
+#' For example, `d_max()` increases desirability with the input while `d_min()`
+#' does the opposite.
 #'
 #' Currently, only the desirability functions defined by Derringer and Suich
 #' (1980) are implemented.
@@ -21,7 +21,8 @@
 #' desirability results at specific values of `x`. Values below and above the
 #' data in `x_vals` are given values of zero and one, respectively.
 #' @param categories A named list of desirability values that match all
-#' possible categories to specific desirability values.
+#' possible categories to specific desirability values. Data that are not
+#' included in `categories` are given the value in `missing`.
 #' @return A numeric vector on `[0, 1]` where larger values are more
 #' desirable.
 #' @seealso [d_max_select()], [d_overall()]
