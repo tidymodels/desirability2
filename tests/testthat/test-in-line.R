@@ -1,6 +1,15 @@
+suppressPackageStartupMessages(library(dplyr, quietly = TRUE))
 
+res <-
+  classification_results %>%
+  mutate(
+    d_feat = d_min(num_features, 1, 200),
+    d_roc  = d_max(roc_auc, 0.5, 0.9)
+  )
 
-test_that('D&E examples page 218', {
+# ------------------------------------------------------------------------------
+
+test_that('D&S examples page 218', {
   expect_equal(d_max(129.5, 120, 170), .189, tolerance = .01)           # pico
   expect_equal(d_max(1300, 1000, 1300), 1, tolerance = .01)             # modulus
   expect_equal(d_target(465.7, 400, 500, 600), 0.656, tolerance = .01)  # elongation
@@ -190,10 +199,19 @@ test_that('correct values', {
     d_category(month.abb[2:4], lvls),
     c(0.2, 0.4, 0.6)
   )
-  # expect_equal(
-  #   d_category(month.abb[1:5], lvls),
-  #   c(NA_real_, 0.2, 0.4, 0.6, NA_real_)
-  # )
+
+  # ------------------------------------------------------------------------------
+
+  expect_equal(
+    res %>%  mutate(d_all  = d_overall(across(starts_with("d_")))) %>% purrr::pluck("d_all"),
+    sqrt(res$d_feat * res$d_roc)
+  )
+  expect_error(
+    res %>%  mutate(d_all  = d_overall(across(everything()))),
+    "Desirability values should be numeric and complete in the range"
+  )
+
+
 })
 
 test_that('missing values', {

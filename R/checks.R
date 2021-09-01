@@ -1,6 +1,6 @@
-check_numeric <- function(x) {
+check_numeric <- function(x, input = "`x`") {
   if (!is.vector(x) || !is.numeric(x)) {
-    rlang::abort("`x` should be a numeric vector.")
+    rlang::abort(paste0(input, " should be a numeric vector."))
   }
   invisible(NULL)
 }

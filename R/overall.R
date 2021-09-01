@@ -39,7 +39,9 @@
 #'   arrange(desc(d_all))
 
 d_overall <- function(..., geometric = TRUE, tolerance = 0) {
-  vals <- purrr::map_dfc(list(...), I)
+  d_lst <- list(...)[[1]]
+  check_d_inputs(d_lst)
+  vals <- purrr::map_dfc(d_lst, I)
   vals <- as.matrix(vals)
   if (tolerance > 0) {
     vals[vals < tolerance] <- tolerance
@@ -59,3 +61,12 @@ geomean <- function(x, na.rm = TRUE) {
   exp(sum(log(x), na.rm = na.rm) / sum(!is.na(x)))
 }
 
+check_d_inputs <- function(x) {
+  tmp <- purrr::map(x, check_numeric, input = "desirability")
+  tmp <- purrr::map(x, check_unit_range)
+  size <- purrr::map_int(x, length)
+  if (length(unique(size)) != 1) {
+    rlang::abort("All desirability inputs should have the same length.")
+  }
+  invisible(TRUE)
+}
