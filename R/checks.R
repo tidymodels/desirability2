@@ -23,3 +23,29 @@ check_unit_range <- function(x) {
   }
   invisible(NULL)
 }
+
+check_value_order <- function(low, high, target = NULL) {
+  if (length(low) != 1 | !is.numeric(low) | is.na(low)) {
+    rlang::abort("'low' should be a single numeric value.")
+  }
+
+  if (length(high) != 1 | !is.numeric(high) | is.na(high)) {
+    rlang::abort("'high' should be a single numeric value.")
+  }
+
+  if (!is.null(target)) {
+    if (length(target) != 1 | !is.numeric(target) | is.na(target)) {
+      rlang::abort("'target' should be a single numeric value.")
+    }
+    ord <- low < target & target < high
+    if (!ord) {
+      rlang::abort("The values should be `low < target < high`.")
+    }
+  } else {
+    ord <- low < high
+    if (!ord) {
+      rlang::abort("The values should be `low < high`.")
+    }
+  }
+  invisible(TRUE)
+}

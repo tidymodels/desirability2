@@ -1,6 +1,7 @@
 .comp_max <- function(x, low, high, scale, missing) {
   check_unit_range(missing)
   check_numeric(x)
+  check_value_order(low, high)
 
   out <- rep(missing, length(x))
   out[x < low & !is.na(x)] <- 0
@@ -13,6 +14,8 @@
 .comp_min <- function(x, low, high, scale, missing) {
   check_unit_range(missing)
   check_numeric(x)
+  check_value_order(low, high)
+
   out <- rep(missing, length(x))
   out[x < low & !is.na(x)] <- 1
   out[x > high & !is.na(x)] <- 0
@@ -25,6 +28,7 @@
 .comp_target <- function(x, low, target, high, scale_low, scale_high, missing) {
   check_unit_range(missing)
   check_numeric(x)
+  check_value_order(low, high, target)
 
   out <- rep(missing, length(x))
 
@@ -62,6 +66,8 @@
 .comp_box <- function(x, low, high, missing) {
   check_numeric(x)
   check_unit_range(missing)
+  check_value_order(low, high)
+
   out <- rep(missing, length(x))
   out[x < low | x > high & !is.na(x)] <- 0
   out[x >= low & x <= high & !is.na(x)] <- 1
