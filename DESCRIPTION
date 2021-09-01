@@ -26,7 +26,7 @@ Suggests:
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.1.9001
 Depends: 
     R (>= 2.10)
 LazyData: true
