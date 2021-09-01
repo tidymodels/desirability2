@@ -25,7 +25,7 @@
 #' included in `categories` are given the value in `missing`.
 #' @return A numeric vector on `[0, 1]` where larger values are more
 #' desirable.
-#' @seealso [d_max_select()], [d_overall()]
+#' @seealso [d_overall()]
 #' @references Derringer, G. and Suich, R. (1980), Simultaneous Optimization of
 #' Several Response Variables. _Journal of Quality Technology_, 12, 214-219.
 #' @export
@@ -110,6 +110,13 @@
 #'   geom_bar(stat = "identity") +
 #'   lims(y = 0:1) +
 #'   ylab("Desirability")
+#'
+#' # ------------------------------------------------------------------------------
+#' # Apply the same function to many columns at once (dplyr > 1.0)
+#'
+#' dat %>%
+#'   mutate(across(c(everything()), ~ d_min(., .2, .6), .names = "d_{col}"))
+#'
 d_max <- function(x, low, high, scale = 1, missing = NA_real_) {
   .comp_max(x, low, high, scale, missing)
 }

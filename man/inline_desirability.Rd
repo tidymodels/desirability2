@@ -143,11 +143,18 @@ tibble(x = letters[1:7]) \%>\%
   geom_bar(stat = "identity") +
   lims(y = 0:1) +
   ylab("Desirability")
+
+# ------------------------------------------------------------------------------
+# Apply the same function to many columns at once (dplyr > 1.0)
+
+dat \%>\%
+  mutate(across(c(everything()), ~ d_min(., .2, .6), .names = "d_{col}"))
+
 }
 \references{
 Derringer, G. and Suich, R. (1980), Simultaneous Optimization of
 Several Response Variables. \emph{Journal of Quality Technology}, 12, 214-219.
 }
 \seealso{
-\code{\link[=d_max_select]{d_max_select()}}, \code{\link[=d_overall]{d_overall()}}
+\code{\link[=d_overall]{d_overall()}}
 }
