@@ -46,6 +46,7 @@
   check_unit_range(missing)
   check_unit_range(d)
   check_numeric(x)
+  check_vectors(values, d)
 
   ord <- order(values)
   values <- values[ord]

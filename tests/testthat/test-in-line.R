@@ -32,7 +32,26 @@ test_that('correct values', {
     c(0, 0, 0.002, 0.0156, 0.0527, 0.125, 0.2441, 0.4219, 0.6699, 1, 1),
     tolerance = 0.1
   )
-
+  expect_error(
+    d_max(x, 0, -1),
+    "The values should be `low < high`"
+  )
+  expect_error(
+    d_max(x, 0:1, 2),
+    "low' should be a single numeric value"
+  )
+  expect_error(
+    d_max(x, 0, 1:2),
+    "high' should be a single numeric value"
+  )
+  expect_error(
+    d_max(x, NA_real_, 1:2),
+    "low' should be a single numeric value"
+  )
+  expect_error(
+    d_max(x, 0, NA_real_),
+    "high' should be a single numeric value"
+  )
   # ------------------------------------------------------------------------------
 
   expect_equal(
@@ -53,6 +72,26 @@ test_that('correct values', {
     c(1, 1, 0.6699, 0.4219, 0.2441, 0.125, 0.0527, 0.0156, 0.002, 0, 0),
     tolerance = 0.1
   )
+  expect_error(
+    d_min(x, 0, -1),
+    "The values should be `low < high`"
+  )
+  expect_error(
+    d_min(x, 0:1, 2),
+    "low' should be a single numeric value"
+  )
+  expect_error(
+    d_min(x, 0, 1:2),
+    "high' should be a single numeric value"
+  )
+  expect_error(
+    d_min(x, NA_real_, 1:2),
+    "low' should be a single numeric value"
+  )
+  expect_error(
+    d_min(x, 0, NA_real_),
+    "high' should be a single numeric value"
+  )
 
   # ------------------------------------------------------------------------------
 
@@ -66,7 +105,30 @@ test_that('correct values', {
     c(0, 0, 0.7071, 1, 0.5787, 0.2963, 0.125, 0.037, 0.0046, 0, 0),
     tolerance = 0.1
   )
-
+  expect_error(
+    d_target(x, 0:1, 2, 3),
+    "low' should be a single numeric value"
+  )
+  expect_error(
+    d_target(x, 0, 1:2, 3),
+    "target' should be a single numeric value"
+  )
+  expect_error(
+    d_target(x, 0, 1, 2:3),
+    "high' should be a single numeric value"
+  )
+  expect_error(
+    d_target(x, NA_real_, 1, 2),
+    "low' should be a single numeric value"
+  )
+  expect_error(
+    d_target(x, 0, NA_real_, 1),
+    "target' should be a single numeric value"
+  )
+  expect_error(
+    d_target(x, 0, 1, NA_real_),
+    "high' should be a single numeric value"
+  )
   # ------------------------------------------------------------------------------
 
   x_points <- (1:5)/5
@@ -76,6 +138,22 @@ test_that('correct values', {
     c(0, 0, 0.36, 0.5, 0.64, 0.74, 0.84, 0.9, 0.96, 0.98, 1),
     tolerance = 0.1
   )
+  expect_error(
+    d_custom(x, x_points[-1], d_points),
+    "'values' and 'd' should be the same length"
+  )
+  expect_error(
+    d_custom(x, x_points, d_points[-1]),
+    "'values' and 'd' should be the same length"
+  )
+  expect_error(
+    d_custom(x, letters, d_points),
+    "'values' should be a numeric vector"
+  )
+  expect_error(
+    d_custom(x, x_points, letters),
+    "Desirability values should be numeric and complete"
+  )
 
   # ------------------------------------------------------------------------------
 
@@ -84,7 +162,26 @@ test_that('correct values', {
     c(0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0),
     tolerance = 0.1
   )
-
+  expect_error(
+    d_box(x, 0, -1),
+    "The values should be `low < high`"
+  )
+  expect_error(
+    d_box(x, 0:1, 2),
+    "low' should be a single numeric value"
+  )
+  expect_error(
+    d_box(x, 0, 1:2),
+    "high' should be a single numeric value"
+  )
+  expect_error(
+    d_box(x, NA_real_, 1:2),
+    "low' should be a single numeric value"
+  )
+  expect_error(
+    d_box(x, 0, NA_real_),
+    "high' should be a single numeric value"
+  )
   # ------------------------------------------------------------------------------
 
   lvls <- (1:5)/5

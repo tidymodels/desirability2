@@ -13,7 +13,7 @@ check_categorical <- function(x) {
 }
 
 check_unit_range <- function(x) {
-  msg <- "Desirability values should be numeric in the range [0, 1]."
+  msg <- "Desirability values should be numeric and complete in the range [0, 1]."
   if (!is.vector(x) || !is.numeric(x)) {
     rlang::abort(msg)
   }
@@ -25,16 +25,16 @@ check_unit_range <- function(x) {
 }
 
 check_value_order <- function(low, high, target = NULL) {
-  if (length(low) != 1 | !is.numeric(low) | is.na(low)) {
+  if (length(low) != 1 || !is.numeric(low) || is.na(low)) {
     rlang::abort("'low' should be a single numeric value.")
   }
 
-  if (length(high) != 1 | !is.numeric(high) | is.na(high)) {
+  if (length(high) != 1 || !is.numeric(high) || is.na(high)) {
     rlang::abort("'high' should be a single numeric value.")
   }
 
   if (!is.null(target)) {
-    if (length(target) != 1 | !is.numeric(target) | is.na(target)) {
+    if (length(target) != 1 || !is.numeric(target) || is.na(target)) {
       rlang::abort("'target' should be a single numeric value.")
     }
     ord <- low < target & target < high
@@ -46,6 +46,19 @@ check_value_order <- function(low, high, target = NULL) {
     if (!ord) {
       rlang::abort("The values should be `low < high`.")
     }
+  }
+  invisible(TRUE)
+}
+
+check_vectors <- function(values, d) {
+  if (!is.vector(values) || !is.numeric(values)) {
+    rlang::abort("'values' should be a numeric vector.")
+  }
+  if (!is.vector(d) || !is.numeric(d)) {
+    rlang::abort("'d' should be a numeric vector.")
+  }
+  if (length(values) != length(d)) {
+    rlang::abort("'values' and 'd' should be the same length.")
   }
   invisible(TRUE)
 }
