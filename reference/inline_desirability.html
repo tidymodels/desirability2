@@ -43,7 +43,7 @@
 <meta property="og:description" content="Desirability functions map some input to a [0, 1] scale where zero is
 unacceptable and one is most desirable. The mapping depends on the situation.
 For example, d_max() increases desirability with the input while d_min()
-does the opposite.
+does the opposite. See the plots in the examples to see more examples.
 Currently, only the desirability functions defined by Derringer and Suich
 (1980) are implemented." />
 
@@ -117,14 +117,14 @@ Currently, only the desirability functions defined by Derringer and Suich
     <p>Desirability functions map some input to a <code>[0, 1]</code> scale where zero is
 unacceptable and one is most desirable. The mapping depends on the situation.
 For example, <code>d_max()</code> increases desirability with the input while <code>d_min()</code>
-does the opposite.</p>
+does the opposite. See the plots in the examples to see more examples.</p>
 <p>Currently, only the desirability functions defined by Derringer and Suich
 (1980) are implemented.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>d_max</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>low</span>, <span class='va'>high</span>, scale <span class='op'>=</span> <span class='fl'>1</span>, missing <span class='op'>=</span> <span class='cn'>NA_real_</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>d_max</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>low</span>, <span class='va'>high</span>, scale <span class='op'>=</span> <span class='fl'>1</span>, missing <span class='op'>=</span> <span class='cn'>NA_real_</span>, use_data <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>d_min</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>low</span>, <span class='va'>high</span>, scale <span class='op'>=</span> <span class='fl'>1</span>, missing <span class='op'>=</span> <span class='cn'>NA_real_</span><span class='op'>)</span>
+<span class='fu'>d_min</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>low</span>, <span class='va'>high</span>, scale <span class='op'>=</span> <span class='fl'>1</span>, missing <span class='op'>=</span> <span class='cn'>NA_real_</span>, use_data <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='fu'>d_target</span><span class='op'>(</span>
   <span class='va'>x</span>,
@@ -133,10 +133,11 @@ does the opposite.</p>
   <span class='va'>high</span>,
   scale_low <span class='op'>=</span> <span class='fl'>1</span>,
   scale_high <span class='op'>=</span> <span class='fl'>1</span>,
-  missing <span class='op'>=</span> <span class='cn'>NA_real_</span>
+  missing <span class='op'>=</span> <span class='cn'>NA_real_</span>,
+  use_data <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span>
 
-<span class='fu'>d_box</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>low</span>, <span class='va'>high</span>, missing <span class='op'>=</span> <span class='cn'>NA_real_</span><span class='op'>)</span>
+<span class='fu'>d_box</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>low</span>, <span class='va'>high</span>, missing <span class='op'>=</span> <span class='cn'>NA_real_</span>, use_data <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='fu'>d_custom</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>x_vals</span>, <span class='va'>desirability</span>, missing <span class='op'>=</span> <span class='cn'>NA_real_</span><span class='op'>)</span>
 
@@ -163,6 +164,11 @@ desirability function.</p></td>
       <th>missing</th>
       <td><p>A single numeric value on <code>[0, 1]</code> (or <code>NA_real_</code>) that
 defines how missing values in <code>x</code> are mapped to the desirability score.</p></td>
+    </tr>
+    <tr>
+      <th>use_data</th>
+      <td><p>Should the low, middle, and/or high values be derived from
+the data (<code>x</code>) using the minimum, maximum, or median (respectively)?</p></td>
     </tr>
     <tr>
       <th>x_vals, desirability</th>
