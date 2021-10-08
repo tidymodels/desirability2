@@ -39,9 +39,13 @@
 #'   arrange(desc(d_all))
 
 d_overall <- function(..., geometric = TRUE, tolerance = 0) {
-  d_lst <- list(...)[[1]]
-  check_d_inputs(d_lst)
-  vals <- purrr::map_dfc(d_lst, I)
+  d_lst <- list(...)
+  d_lst <- maybe_name(d_lst)
+  vals <- dplyr::bind_cols(d_lst)
+  check_d_inputs(vals)
+  if (ncol(vals) == 1) {
+    return(vals[[1]])
+  }
   vals <- as.matrix(vals)
   if (tolerance > 0) {
     vals[vals < tolerance] <- tolerance
@@ -52,6 +56,26 @@ d_overall <- function(..., geometric = TRUE, tolerance = 0) {
     res <- apply(vals, 1, mean, na.rm = TRUE)
   }
   res
+}
+
+maybe_name <- function(x) {
+  # The selector can return vectors (unnamed) and data frames.
+  # Binding unnamed things generates a warning so add names here when needed.
+  is_tbl <- purrr::map_lgl(x, is.data.frame)
+   if (all(is_tbl)) {
+     return(x)
+   }
+  if (any(!is_tbl)) {
+    if (any(is_tbl)) {
+      df_x <- x[is_tbl]
+    }
+    x <- x[!is_tbl]
+    names(x) <- paste0("d_", which(!is_tbl))
+    if (any(is_tbl)) {
+      x <- c(x, df_x)
+    }
+  }
+  x
 }
 
 geomean <- function(x, na.rm = TRUE) {

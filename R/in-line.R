@@ -5,7 +5,7 @@
 #' Desirability functions map some input to a `[0, 1]` scale where zero is
 #' unacceptable and one is most desirable. The mapping depends on the situation.
 #' For example, `d_max()` increases desirability with the input while `d_min()`
-#' does the opposite.
+#' does the opposite. See the plots in the examples to see more examples.
 #'
 #' Currently, only the desirability functions defined by Derringer and Suich
 #' (1980) are implemented.
@@ -17,6 +17,8 @@
 #' desirability function.
 #' @param missing A single numeric value on `[0, 1]` (or `NA_real_`) that
 #' defines how missing values in `x` are mapped to the desirability score.
+#' @param use_data Should the low, middle, and/or high values be derived from
+#' the data (`x`) using the minimum, maximum, or median (respectively)?
 #' @param x_vals,desirability Numeric vectors of the same length that define the
 #' desirability results at specific values of `x`. Values below and above the
 #' data in `x_vals` are given values of zero and one, respectively.
@@ -117,27 +119,39 @@
 #' dat %>%
 #'   mutate(across(c(everything()), ~ d_min(., .2, .6), .names = "d_{col}"))
 #'
-d_max <- function(x, low, high, scale = 1, missing = NA_real_) {
+d_max <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE) {
+  low  <- check_args(low,  x, use_data, fn = "d_max")
+  high <- check_args(high, x, use_data, fn = "d_max", type = "high")
+
   .comp_max(x, low, high, scale, missing)
 }
 
 #' @rdname inline_desirability
 #' @export
-d_min <- function(x, low, high, scale = 1, missing = NA_real_) {
+d_min <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE) {
+  low  <- check_args(low,  x, use_data, fn = "d_min")
+  high <- check_args(high, x, use_data, fn = "d_min", type = "high")
   .comp_min(x, low, high, scale, missing)
 }
 
 
 #' @rdname inline_desirability
 #' @export
-d_target <- function(x, low, target, high, scale_low = 1, scale_high = 1, missing = NA_real_) {
+d_target <- function(x, low, target, high, scale_low = 1, scale_high = 1,
+                     missing = NA_real_, use_data = FALSE) {
+  low    <- check_args(low,    x, use_data, fn = "d_target")
+  high   <- check_args(high,   x, use_data, fn = "d_target", type = "high")
+  target <- check_args(target, x, use_data, fn = "d_target", type = "target")
+
   .comp_target(x, low, target, high, scale_low, scale_high, missing)
 }
 
 
 #' @rdname inline_desirability
 #' @export
-d_box <- function(x, low, high, missing = NA_real_) {
+d_box <- function(x, low, high, missing = NA_real_, use_data = FALSE) {
+  low  <- check_args(low,  x, use_data, fn = "d_box")
+  high <- check_args(high, x, use_data, fn = "d_box", type = "high")
   .comp_box(x, low, high, missing)
 }
 
