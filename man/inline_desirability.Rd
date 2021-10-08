@@ -10,9 +10,9 @@
 \alias{d_category}
 \title{Desirability functions for in-line computations}
 \usage{
-d_max(x, low, high, scale = 1, missing = NA_real_)
+d_max(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE)
 
-d_min(x, low, high, scale = 1, missing = NA_real_)
+d_min(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE)
 
 d_target(
   x,
@@ -21,10 +21,11 @@ d_target(
   high,
   scale_low = 1,
   scale_high = 1,
-  missing = NA_real_
+  missing = NA_real_,
+  use_data = FALSE
 )
 
-d_box(x, low, high, missing = NA_real_)
+d_box(x, low, high, missing = NA_real_, use_data = FALSE)
 
 d_custom(x, x_vals, desirability, missing = NA_real_)
 
@@ -42,6 +43,9 @@ desirability function.}
 \item{missing}{A single numeric value on \verb{[0, 1]} (or \code{NA_real_}) that
 defines how missing values in \code{x} are mapped to the desirability score.}
 
+\item{use_data}{Should the low, middle, and/or high values be derived from
+the data (\code{x}) using the minimum, maximum, or median (respectively)?}
+
 \item{x_vals, desirability}{Numeric vectors of the same length that define the
 desirability results at specific values of \code{x}. Values below and above the
 data in \code{x_vals} are given values of zero and one, respectively.}
@@ -58,7 +62,7 @@ desirable.
 Desirability functions map some input to a \verb{[0, 1]} scale where zero is
 unacceptable and one is most desirable. The mapping depends on the situation.
 For example, \code{d_max()} increases desirability with the input while \code{d_min()}
-does the opposite.
+does the opposite. See the plots in the examples to see more examples.
 
 Currently, only the desirability functions defined by Derringer and Suich
 (1980) are implemented.

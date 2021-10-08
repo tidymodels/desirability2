@@ -13,8 +13,10 @@ Description: Desirability functions <doi:10.1080/00224065.1980.11980968> for
     easy use within `dplyr` pipelines.
 License: MIT + file LICENSE
 Imports: 
+    glue,
     purrr,
     rlang,
+    stats,
     tibble,
     tidyselect
 Suggests: 

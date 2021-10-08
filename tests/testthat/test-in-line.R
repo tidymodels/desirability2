@@ -203,11 +203,15 @@ test_that('correct values', {
   # ------------------------------------------------------------------------------
 
   expect_equal(
-    res %>%  mutate(d_all  = d_overall(across(starts_with("d_")))) %>% purrr::pluck("d_all"),
+    res %>% mutate(d_all  = d_overall(across(starts_with("d_")))) %>% purrr::pluck("d_all"),
+    sqrt(res$d_feat * res$d_roc)
+  )
+  expect_equal(
+    res %>% mutate(d_all  = d_overall(d_feat, d_roc)) %>% purrr::pluck("d_all"),
     sqrt(res$d_feat * res$d_roc)
   )
   expect_error(
-    res %>%  mutate(d_all  = d_overall(across(everything()))),
+    res %>% mutate(d_all  = d_overall(across(everything()))),
     "Desirability values should be numeric and complete in the range"
   )
 

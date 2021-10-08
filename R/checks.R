@@ -62,3 +62,20 @@ check_vectors <- function(values, d) {
   }
   invisible(TRUE)
 }
+
+
+check_args <- function(arg, x, use_data, fn, type = "low") {
+  if (rlang::is_missing(arg)) {
+    if (use_data) {
+      type <- rlang::arg_match0(type, c("low", "high", "target"))
+      .fn <- switch(type, low = min, high = max, target = stats::median)
+      arg <- .fn(x, na.rm = TRUE)
+    } else {
+      rlang::abort(
+        glue::glue("In `{fn}()`, argument '{type}' is required when 'new_data = FALSE'.")
+      )
+    }
+  }
+  arg
+}
+

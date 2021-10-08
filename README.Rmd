@@ -28,6 +28,49 @@ For example, [Kuhn and Johnson (2019)](https://bookdown.org/max/FES/genetic-algo
 
 The desirability2 package improves on the original [desirability package](https://cran.r-project.org/package=desirability) by enabling in-line computations that can be used with dplyr pipelines. 
 
+## A ranking example
+
+Suppose a classification model with two tuning parameters (`penalty` and `mixture`) and several performance measures (multinomial log-loss, area under the precision-recall curve, and the area under the ROC curve). For each tuning parameter, the average number of features used in the model was also computed: 
+
+```{r, start, include = FALSE}
+library(desirability2)
+library(dplyr)
+```
+
+```{r}
+library(desirability2)
+library(dplyr)
+classification_results
+```
+
+We might want to pick a model in a way that maximizes the area under the ROC curve with a minimum number of model terms. We know that the ROC measures is usually between 0.5 and 1.0. We can define a desirability function to _maximize_ this value using:
+
+```r
+d_max(roc_auc, low = 1/2, high = 1)
+```
+
+For the number of terms, if we wanted to minimize this under the condition that there should be less than 100 features, a minimal desirability function can be appropriate: 
+
+```r
+d_min(num_features, low = 1, high = 100)
+```
+
+We can add these as columns to the data using a `mutate()` statement along with a call to the function that blends these values using a geometric mean: 
+
+```{r}
+classification_results %>% 
+  select(-mn_log_loss, -pr_auc) %>% 
+  mutate(
+    d_roc   = d_max(roc_auc, low = 1/2, high = 1), 
+    d_terms = d_min(num_features, low = 1, high = 50),
+    d_both    = d_overall(d_roc, d_terms)
+  ) %>% 
+  # rank from most desirable to least:
+  arrange(desc(d_both))
+```
+
+See `?inline_desirability` for details on the individual desirability functions. 
+
 
 ## Code of Conduct
   
