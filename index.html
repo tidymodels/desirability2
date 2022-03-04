@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,18 +34,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">desirability2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -60,21 +56,21 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="desirability2" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#desirability2" class="anchor"></a>desirability2</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="desirability2">desirability2<a class="anchor" aria-label="anchor" href="#desirability2"></a>
+</h1></div>
 <!-- badges: start -->
 
 <p>Desirability functions are simple but useful tools for simultaneously optimizing several things at once. For each input, a translation function is used to map the input values between zero and one where zero is unacceptable and one is most desirable.</p>
-<p>For example, <a href="https://bookdown.org/max/FES/genetic-algorithms.html#coercing-sparsity">Kuhn and Johnson (2019)</a> use these functions during feature selection to help a genetic algorithm choose which predictors to include in a model that simultaneously improves performance and reduces the number of predictors.</p>
-<p>The desirability2 package improves on the original <a href="https://cran.r-project.org/package=desirability">desirability package</a> by enabling in-line computations that can be used with dplyr pipelines.</p>
-<div id="a-ranking-example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#a-ranking-example" class="anchor"></a>A ranking example</h2>
+<p>For example, <a href="https://bookdown.org/max/FES/genetic-algorithms.html#coercing-sparsity" class="external-link">Kuhn and Johnson (2019)</a> use these functions during feature selection to help a genetic algorithm choose which predictors to include in a model that simultaneously improves performance and reduces the number of predictors.</p>
+<p>The desirability2 package improves on the original <a href="https://cran.r-project.org/package=desirability" class="external-link">desirability package</a> by enabling in-line computations that can be used with dplyr pipelines.</p>
+<div class="section level2">
+<h2 id="a-ranking-example">A ranking example<a class="anchor" aria-label="anchor" href="#a-ranking-example"></a>
+</h2>
 <p>Suppose a classification model with two tuning parameters (<code>penalty</code> and <code>mixture</code>) and several performance measures (multinomial log-loss, area under the precision-recall curve, and the area under the ROC curve). For each tuning parameter, the average number of features used in the model was also computed:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">desirability2</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">desirability2</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 <span class="va">classification_results</span>
 <span class="co">#&gt; # A tibble: 300 × 6</span>
 <span class="co">#&gt;    mixture penalty mn_log_loss pr_auc roc_auc num_features</span>
@@ -96,17 +92,17 @@
 <p>For the number of terms, if we wanted to minimize this under the condition that there should be less than 100 features, a minimal desirability function can be appropriate:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/inline_desirability.html">d_min</a></span><span class="op">(</span><span class="va">num_features</span>, low <span class="op">=</span> <span class="fl">1</span>, high <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
-<p>We can add these as columns to the data using a <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> statement along with a call to the function that blends these values using a geometric mean:</p>
+<p>We can add these as columns to the data using a <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> statement along with a call to the function that blends these values using a geometric mean:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">classification_results</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mn_log_loss</span>, <span class="op">-</span><span class="va">pr_auc</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="va">classification_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mn_log_loss</span>, <span class="op">-</span><span class="va">pr_auc</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
     d_roc   <span class="op">=</span> <span class="fu"><a href="reference/inline_desirability.html">d_max</a></span><span class="op">(</span><span class="va">roc_auc</span>, low <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, high <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, 
     d_terms <span class="op">=</span> <span class="fu"><a href="reference/inline_desirability.html">d_min</a></span><span class="op">(</span><span class="va">num_features</span>, low <span class="op">=</span> <span class="fl">1</span>, high <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>,
     d_both    <span class="op">=</span> <span class="fu"><a href="reference/d_overall.html">d_overall</a></span><span class="op">(</span><span class="va">d_roc</span>, <span class="va">d_terms</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="co"># rank from most desirable to least:</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">d_both</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">d_both</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 300 × 7</span>
 <span class="co">#&gt;    mixture penalty roc_auc num_features d_roc d_terms d_both</span>
 <span class="co">#&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;        &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span>
@@ -123,18 +119,18 @@
 <span class="co">#&gt; # … with 290 more rows</span></code></pre></div>
 <p>See <code><a href="reference/inline_desirability.html">?inline_desirability</a></code> for details on the individual desirability functions.</p>
 </div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
-<p>Please note that the desirability2 project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h2>
+<p>Please note that the desirability2 project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
-<div id="contributing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contributing" class="anchor"></a>Contributing</h2>
-<p>This project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<div class="section level2">
+<h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
+</h2>
+<p>This project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 <ul>
-<li><p>If you think you have encountered a bug, please <a href="https://github.com/tidymodels/desirability2/issues">submit an issue</a>.</p></li>
-<li><p>Either way, learn how to create and share a <a href="https://reprex.tidyverse.org/articles/articles/learn-reprex.html">reprex</a> (a minimal, reproducible example), to clearly communicate about your code.</p></li>
+<li><p>If you think you have encountered a bug, please <a href="https://github.com/tidymodels/desirability2/issues" class="external-link">submit an issue</a>.</p></li>
+<li><p>Either way, learn how to create and share a <a href="https://reprex.tidyverse.org/articles/articles/learn-reprex.html" class="external-link">reprex</a> (a minimal, reproducible example), to clearly communicate about your code.</p></li>
 </ul>
 </div>
 </div>
@@ -142,46 +138,57 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Max Kuhn <br><small class="roles"> Maintainer </small> <a href="https://orcid.org/0000-0003-2402-136X" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing desirability2</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://CRAN.R-project.org/package=desirability2"><img src="https://www.r-pkg.org/badges/version/desirability2" alt="CRAN status"></a></li>
-<li><a href="https://codecov.io/gh/topepo/desirability2?branch=main"><img src="https://codecov.io/gh/topepo/desirability2/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/topepo/desirability2/actions"><img src="https://github.com/topepo/desirability2/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li>Max Kuhn <br><small class="roles"> Maintainer </small> <a href="https://orcid.org/0000-0003-2402-136X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://app.codecov.io/gh/topepo/desirability2?branch=main" class="external-link"><img src="https://codecov.io/gh/topepo/desirability2/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/tidymodels/desirability2/actions" class="external-link"><img src="https://github.com/topepo/desirability2/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Max Kuhn.</p>
+  <p></p>
+<p>Developed by Max Kuhn.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -189,6 +196,8 @@
 
   
 
+
+  
 
   </body>
 </html>
