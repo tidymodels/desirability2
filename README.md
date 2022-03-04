@@ -7,11 +7,9 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/desirability2)](https://CRAN.R-project.org/package=desirability2)
 [![Codecov test
-coverage](https://codecov.io/gh/topepo/desirability2/branch/main/graph/badge.svg)](https://codecov.io/gh/topepo/desirability2?branch=main)
-[![R-CMD-check](https://github.com/topepo/desirability2/workflows/R-CMD-check/badge.svg)](https://github.com/topepo/desirability2/actions)
+coverage](https://codecov.io/gh/topepo/desirability2/branch/main/graph/badge.svg)](https://app.codecov.io/gh/topepo/desirability2?branch=main)
+[![R-CMD-check](https://github.com/topepo/desirability2/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/desirability2/actions)
 <!-- badges: end -->
 
 Desirability functions are simple but useful tools for simultaneously

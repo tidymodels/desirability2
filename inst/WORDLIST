@@ -10,3 +10,5 @@ doi
 CMD
 Codecov
 reprex
+Multiparameter
+dplyr
