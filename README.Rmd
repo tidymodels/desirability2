@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Codecov test coverage](https://codecov.io/gh/topepo/desirability2/branch/main/graph/badge.svg)](https://app.codecov.io/gh/topepo/desirability2?branch=main)
-[![R-CMD-check](https://github.com/topepo/desirability2/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/desirability2/actions)
+[![R-CMD-check](https://github.com/tidymodels/desirability2/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/desirability2/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Desirability functions are simple but useful tools for simultaneously optimizing several things at once. For each input, a translation function is used to map the input values between zero and one where zero is unacceptable and one is most desirable. 
