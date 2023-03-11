@@ -69,54 +69,54 @@
 </h2>
 <p>Suppose a classification model with two tuning parameters (<code>penalty</code> and <code>mixture</code>) and several performance measures (multinomial log-loss, area under the precision-recall curve, and the area under the ROC curve). For each tuning parameter, the average number of features used in the model was also computed:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">desirability2</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="va">classification_results</span>
-<span class="co">#&gt; # A tibble: 300 × 6</span>
-<span class="co">#&gt;    mixture penalty mn_log_loss pr_auc roc_auc num_features</span>
-<span class="co">#&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;        &lt;int&gt;</span>
-<span class="co">#&gt;  1       0  0.1          0.199  0.488   0.869          211</span>
-<span class="co">#&gt;  2       0  0.0788       0.196  0.491   0.870          211</span>
-<span class="co">#&gt;  3       0  0.0621       0.194  0.494   0.871          211</span>
-<span class="co">#&gt;  4       0  0.0489       0.192  0.496   0.872          211</span>
-<span class="co">#&gt;  5       0  0.0386       0.191  0.499   0.873          211</span>
-<span class="co">#&gt;  6       0  0.0304       0.190  0.501   0.873          211</span>
-<span class="co">#&gt;  7       0  0.0240       0.188  0.504   0.874          211</span>
-<span class="co">#&gt;  8       0  0.0189       0.188  0.506   0.874          211</span>
-<span class="co">#&gt;  9       0  0.0149       0.187  0.508   0.874          211</span>
-<span class="co">#&gt; 10       0  0.0117       0.186  0.510   0.874          211</span>
-<span class="co">#&gt; # … with 290 more rows</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">desirability2</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="va">classification_results</span></span>
+<span><span class="co">#&gt; # A tibble: 300 × 6</span></span>
+<span><span class="co">#&gt;    mixture penalty mn_log_loss pr_auc roc_auc num_features</span></span>
+<span><span class="co">#&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;        &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1       0  0.1          0.199  0.488   0.869          211</span></span>
+<span><span class="co">#&gt;  2       0  0.0788       0.196  0.491   0.870          211</span></span>
+<span><span class="co">#&gt;  3       0  0.0621       0.194  0.494   0.871          211</span></span>
+<span><span class="co">#&gt;  4       0  0.0489       0.192  0.496   0.872          211</span></span>
+<span><span class="co">#&gt;  5       0  0.0386       0.191  0.499   0.873          211</span></span>
+<span><span class="co">#&gt;  6       0  0.0304       0.190  0.501   0.873          211</span></span>
+<span><span class="co">#&gt;  7       0  0.0240       0.188  0.504   0.874          211</span></span>
+<span><span class="co">#&gt;  8       0  0.0189       0.188  0.506   0.874          211</span></span>
+<span><span class="co">#&gt;  9       0  0.0149       0.187  0.508   0.874          211</span></span>
+<span><span class="co">#&gt; 10       0  0.0117       0.186  0.510   0.874          211</span></span>
+<span><span class="co">#&gt; # … with 290 more rows</span></span></code></pre></div>
 <p>We might want to pick a model in a way that maximizes the area under the ROC curve with a minimum number of model terms. We know that the ROC measures is usually between 0.5 and 1.0. We can define a desirability function to <em>maximize</em> this value using:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/inline_desirability.html">d_max</a></span><span class="op">(</span><span class="va">roc_auc</span>, low <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, high <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/inline_desirability.html">d_max</a></span><span class="op">(</span><span class="va">roc_auc</span>, low <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, high <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>For the number of terms, if we wanted to minimize this under the condition that there should be less than 100 features, a minimal desirability function can be appropriate:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/inline_desirability.html">d_min</a></span><span class="op">(</span><span class="va">num_features</span>, low <span class="op">=</span> <span class="fl">1</span>, high <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/inline_desirability.html">d_min</a></span><span class="op">(</span><span class="va">num_features</span>, low <span class="op">=</span> <span class="fl">1</span>, high <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
 <p>We can add these as columns to the data using a <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> statement along with a call to the function that blends these values using a geometric mean:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">classification_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mn_log_loss</span>, <span class="op">-</span><span class="va">pr_auc</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
-    d_roc   <span class="op">=</span> <span class="fu"><a href="reference/inline_desirability.html">d_max</a></span><span class="op">(</span><span class="va">roc_auc</span>, low <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, high <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, 
-    d_terms <span class="op">=</span> <span class="fu"><a href="reference/inline_desirability.html">d_min</a></span><span class="op">(</span><span class="va">num_features</span>, low <span class="op">=</span> <span class="fl">1</span>, high <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>,
-    d_both    <span class="op">=</span> <span class="fu"><a href="reference/d_overall.html">d_overall</a></span><span class="op">(</span><span class="va">d_roc</span>, <span class="va">d_terms</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="co"># rank from most desirable to least:</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">d_both</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 300 × 7</span>
-<span class="co">#&gt;    mixture penalty roc_auc num_features d_roc d_terms d_both</span>
-<span class="co">#&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;        &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1   1      0.0189   0.844            7 0.687   0.878  0.777</span>
-<span class="co">#&gt;  2   1      0.0240   0.835            6 0.670   0.898  0.776</span>
-<span class="co">#&gt;  3   0.889  0.0304   0.830            6 0.660   0.898  0.770</span>
-<span class="co">#&gt;  4   0.778  0.0240   0.844            8 0.687   0.857  0.768</span>
-<span class="co">#&gt;  5   0.778  0.0304   0.835            7 0.671   0.878  0.767</span>
-<span class="co">#&gt;  6   0.889  0.0386   0.820            5 0.640   0.918  0.766</span>
-<span class="co">#&gt;  7   0.889  0.0489   0.813            4 0.625   0.939  0.766</span>
-<span class="co">#&gt;  8   0.667  0.0304   0.842            8 0.684   0.857  0.766</span>
-<span class="co">#&gt;  9   0.778  0.0489   0.819            5 0.638   0.918  0.765</span>
-<span class="co">#&gt; 10   0.778  0.0621   0.812            4 0.623   0.939  0.765</span>
-<span class="co">#&gt; # … with 290 more rows</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">classification_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mn_log_loss</span>, <span class="op">-</span><span class="va">pr_auc</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    d_roc   <span class="op">=</span> <span class="fu"><a href="reference/inline_desirability.html">d_max</a></span><span class="op">(</span><span class="va">roc_auc</span>, low <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, high <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, </span>
+<span>    d_terms <span class="op">=</span> <span class="fu"><a href="reference/inline_desirability.html">d_min</a></span><span class="op">(</span><span class="va">num_features</span>, low <span class="op">=</span> <span class="fl">1</span>, high <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>,</span>
+<span>    d_both    <span class="op">=</span> <span class="fu"><a href="reference/d_overall.html">d_overall</a></span><span class="op">(</span><span class="va">d_roc</span>, <span class="va">d_terms</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="co"># rank from most desirable to least:</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">d_both</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 300 × 7</span></span>
+<span><span class="co">#&gt;    mixture penalty roc_auc num_features d_roc d_terms d_both</span></span>
+<span><span class="co">#&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;        &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1   1      0.0189   0.844            7 0.687   0.878  0.777</span></span>
+<span><span class="co">#&gt;  2   1      0.0240   0.835            6 0.670   0.898  0.776</span></span>
+<span><span class="co">#&gt;  3   0.889  0.0304   0.830            6 0.660   0.898  0.770</span></span>
+<span><span class="co">#&gt;  4   0.778  0.0240   0.844            8 0.687   0.857  0.768</span></span>
+<span><span class="co">#&gt;  5   0.778  0.0304   0.835            7 0.671   0.878  0.767</span></span>
+<span><span class="co">#&gt;  6   0.889  0.0386   0.820            5 0.640   0.918  0.766</span></span>
+<span><span class="co">#&gt;  7   0.889  0.0489   0.813            4 0.625   0.939  0.766</span></span>
+<span><span class="co">#&gt;  8   0.667  0.0304   0.842            8 0.684   0.857  0.766</span></span>
+<span><span class="co">#&gt;  9   0.778  0.0489   0.819            5 0.638   0.918  0.765</span></span>
+<span><span class="co">#&gt; 10   0.778  0.0621   0.812            4 0.623   0.939  0.765</span></span>
+<span><span class="co">#&gt; # … with 290 more rows</span></span></code></pre></div>
 <p>See <code><a href="reference/inline_desirability.html">?inline_desirability</a></code> for details on the individual desirability functions.</p>
 </div>
 <div class="section level2">
@@ -164,7 +164,7 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Max Kuhn <br><small class="roles"> Maintainer </small> <a href="https://orcid.org/0000-0003-2402-136X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">More about authors...</a></li>
+<li>Posit Software, PBC <br><small class="roles"> Copyright holder, funder </small>  </li>
 </ul>
 </div>
 
@@ -173,7 +173,7 @@
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://app.codecov.io/gh/topepo/desirability2?branch=main" class="external-link"><img src="https://codecov.io/gh/topepo/desirability2/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/tidymodels/desirability2/actions" class="external-link"><img src="https://github.com/topepo/desirability2/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/tidymodels/desirability2/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/tidymodels/desirability2/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 
@@ -183,12 +183,12 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Max Kuhn.</p>
+<p>Developed by Max Kuhn, Posit Software, PBC.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
