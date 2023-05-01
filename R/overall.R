@@ -14,7 +14,7 @@
 #' @return A numeric vector.
 #' @seealso [d_max()]
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("dplyr")
 #' library(dplyr)
 #'
 #' # Choose model tuning parameters that minimize the number of predictors used

@@ -38,7 +38,11 @@ d_category(x, categories, missing = NA_real_)
 desirability.}
 
 \item{scale, scale_low, scale_high}{A single numeric value to rescale the
-desirability function.}
+desirability function (each should be great than 0.0). Values >1.0 make the
+desirability more difficult to satisfy while smaller values make it easier
+(see the examples below). \code{scale_low} and  \code{scale_high} do the same for
+target functions with \code{scale_low} affecting the range below the \code{target}
+value and \code{scale_high} affecting values greater than \code{target}.}
 
 \item{missing}{A single numeric value on \verb{[0, 1]} (or \code{NA_real_}) that
 defines how missing values in \code{x} are mapped to the desirability score.}
@@ -67,7 +71,58 @@ does the opposite. See the plots in the examples to see more examples.
 Currently, only the desirability functions defined by Derringer and Suich
 (1980) are implemented.
 }
+\details{
+Each function translates the values to desirability on \verb{[0, 1]}.
+\subsection{Equations}{
+\subsection{Maximization}{
+\itemize{
+\item \code{data > high}: d = 1.0
+\item \code{data < low}: d = 0.0
+\item \verb{low <= data <= high}: \eqn{d = \left(\frac{data-low}{high-low}\right)^{scale}}
+}
+}
+
+\subsection{Minimization}{
+\itemize{
+\item \code{data > high}: d = 0.0
+\item \code{data < low}: d = 1.0
+\item \verb{low <= data <= high}: \eqn{d = \left(\frac{data = low}{low - high}\right)^{scale}}
+}
+}
+
+\subsection{Target}{
+\itemize{
+\item \code{data > high}: d = 0.0
+\item \code{data < low}: d = 0.0
+\item \verb{low <= data <= target}: \eqn{d = \left(\frac{data - low}{target - low}\right)^{scale\_low}}
+\item \verb{target <= data <= high}: \eqn{d = \left(\frac{data - high}{target - high}\right)^{scale\_high}}
+}
+}
+
+\subsection{Minimization}{
+\itemize{
+\item \code{data > high}: d = 0.0
+\item \code{data < low}: d = 0.0
+\item \verb{low <= data <= high}:d = 1.0
+}
+}
+
+\subsection{Categories}{
+\itemize{
+\item \code{data = level}: d = 1.0
+\item \code{data != level}: d = 0.0
+}
+}
+
+\subsection{Custom}{
+
+For some function \eqn(f()), desirability is \eqn(f(data)).
+}
+
+}
+}
 \examples{
+\dontshow{if (rlang::is_installed(c("dplyr", "ggplot2"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)
 library(ggplot2)
 
@@ -153,7 +208,7 @@ tibble(x = letters[1:7]) \%>\%
 
 dat \%>\%
   mutate(across(c(everything()), ~ d_min(., .2, .6), .names = "d_{col}"))
-
+\dontshow{\}) # examplesIf}
 }
 \references{
 Derringer, G. and Suich, R. (1980), Simultaneous Optimization of
