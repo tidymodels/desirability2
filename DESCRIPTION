@@ -2,16 +2,17 @@ Package: desirability2
 Title: Desirability Functions for Multiparameter Optimization
 Version: 0.0.0.9000
 Authors@R: c(
-      person(given = "Max",
-             family = "Kuhn",
-             role = "cre",
-             email = "max@posit.co",
-             comment = c(ORCID = "0000-0003-2402-136X")),
-      person(given = "Posit Software, PBC", role = c("cph", "fnd"))
+    person("Max", "Kuhn", , "max@posit.co", role = "cre",
+           comment = c(ORCID = "0000-0003-2402-136X")),
+    person("Posit Software, PBC", role = c("cph", "fnd"))
   )
-Description: Desirability functions <doi:10.1080/00224065.1980.11980968> for 
-    easy use within `dplyr` pipelines.
+Description: Desirability functions <doi:10.1080/00224065.1980.11980968>
+    for easy use within `dplyr` pipelines.
 License: MIT + file LICENSE
+URL: https://desirability2.tidymodels.org,
+    https://github.com/tidymodels/desirability2
+Depends: 
+    R (>= 2.10)
 Imports: 
     glue,
     purrr,
@@ -25,11 +26,10 @@ Suggests:
     ggplot2,
     spelling,
     testthat (>= 3.0.0)
+Config/Needs/website: tidyverse/tidytemplate    
+Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Depends: 
-    R (>= 2.10)
-LazyData: true
-Config/testthat/edition: 3
