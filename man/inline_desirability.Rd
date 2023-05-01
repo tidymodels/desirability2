@@ -116,7 +116,9 @@ Each function translates the values to desirability on \verb{[0, 1]}.
 
 \subsection{Custom}{
 
-For some function \eqn(f()), desirability is \eqn(f(data)).
+For the sequence of values given to the function, \code{d_custom()} will return
+the desirability values that correspond to data matching values in \code{x_vals}.
+Otherwise, linear interpolation is used for values in-between.
 }
 
 }

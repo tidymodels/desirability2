@@ -17,8 +17,7 @@ Imports:
     purrr,
     rlang,
     stats,
-    tibble,
-    tidyselect
+    tibble
 Suggests: 
     covr,
     dplyr,
