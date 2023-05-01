@@ -8,7 +8,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Codecov test
-coverage](https://codecov.io/gh/topepo/desirability2/branch/main/graph/badge.svg)](https://app.codecov.io/gh/topepo/desirability2?branch=main)
+coverage](https://codecov.io/gh/tidymodels/desirability2/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/desirability2?branch=main)
 [![R-CMD-check](https://github.com/tidymodels/desirability2/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/desirability2/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -52,7 +52,7 @@ classification_results
 #>  8       0  0.0189       0.188  0.506   0.874          211
 #>  9       0  0.0149       0.187  0.508   0.874          211
 #> 10       0  0.0117       0.186  0.510   0.874          211
-#> # … with 290 more rows
+#> # ℹ 290 more rows
 ```
 
 We might want to pick a model in a way that maximizes the area under the
@@ -99,7 +99,7 @@ classification_results %>%
 #>  8   0.667  0.0304   0.842            8 0.684   0.857  0.766
 #>  9   0.778  0.0489   0.819            5 0.638   0.918  0.765
 #> 10   0.778  0.0621   0.812            4 0.623   0.939  0.765
-#> # … with 290 more rows
+#> # ℹ 290 more rows
 ```
 
 See `?inline_desirability` for details on the individual desirability
