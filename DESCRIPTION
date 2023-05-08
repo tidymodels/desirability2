@@ -6,9 +6,9 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-2402-136X")),
     person("Posit Software, PBC", role = c("cph", "fnd"))
   )
-Description: In-line functions multivariate optimization using the desirability 
-    functions by Derringer and Suich (1980) <doi:10.1080/00224065.1980.11980968>
-    for easy use within `dplyr` pipelines.
+Description: In-line functions for multivariate optimization via desirability 
+    functions (Derringer and Suich, 1980, <doi:10.1080/00224065.1980.11980968>)
+    with easy use within `dplyr` pipelines.
 License: MIT + file LICENSE
 URL: https://desirability2.tidymodels.org,
     https://github.com/tidymodels/desirability2
