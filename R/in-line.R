@@ -14,7 +14,11 @@
 #' @param low,high,target Single numeric values that define the active ranges of
 #' desirability.
 #' @param scale,scale_low,scale_high A single numeric value to rescale the
-#' desirability function.
+#' desirability function (each should be great than 0.0). Values >1.0 make the
+#' desirability more difficult to satisfy while smaller values make it easier
+#' (see the examples below). `scale_low` and  `scale_high` do the same for
+#' target functions with `scale_low` affecting the range below the `target`
+#' value and `scale_high` affecting values greater than `target`.
 #' @param missing A single numeric value on `[0, 1]` (or `NA_real_`) that
 #' defines how missing values in `x` are mapped to the desirability score.
 #' @param use_data Should the low, middle, and/or high values be derived from
@@ -27,12 +31,52 @@
 #' included in `categories` are given the value in `missing`.
 #' @return A numeric vector on `[0, 1]` where larger values are more
 #' desirable.
+#' @details
+#' Each function translates the values to desirability on `[0, 1]`.
+#'
+#' ## Equations
+#'
+#' ### Maximization
+#'
+#' - `data > high`: d = 1.0
+#' - `data < low`: d = 0.0
+#' - `low <= data <= high`: \eqn{d = \left(\frac{data-low}{high-low}\right)^{scale}}
+#'
+#' ### Minimization
+#'
+#' - `data > high`: d = 0.0
+#' - `data < low`: d = 1.0
+#' - `low <= data <= high`: \eqn{d = \left(\frac{data = low}{low - high}\right)^{scale}}
+#'
+#' ### Target
+#'
+#' - `data > high`: d = 0.0
+#' - `data < low`: d = 0.0
+#' - `low <= data <= target`: \eqn{d = \left(\frac{data - low}{target - low}\right)^{scale\_low}}
+#' - `target <= data <= high`: \eqn{d = \left(\frac{data - high}{target - high}\right)^{scale\_high}}
+#'
+#' ### Minimization
+#'
+#' - `data > high`: d = 0.0
+#' - `data < low`: d = 0.0
+#' - `low <= data <= high`:d = 1.0
+#'
+#' ### Categories
+#' - `data = level`: d = 1.0
+#' - `data != level`: d = 0.0
+#'
+#' ### Custom
+#'
+#' For the sequence of values given to the function, `d_custom()` will return
+#' the desirability values that correspond to data matching values in `x_vals`.
+#' Otherwise, linear interpolation is used for values in-between.
+#'
 #' @seealso [d_overall()]
 #' @references Derringer, G. and Suich, R. (1980), Simultaneous Optimization of
 #' Several Response Variables. _Journal of Quality Technology_, 12, 214-219.
 #' @export
 #' @name inline_desirability
-#' @examples
+#' @examplesIf rlang::is_installed(c("dplyr", "ggplot2"))
 #' library(dplyr)
 #' library(ggplot2)
 #'
@@ -122,6 +166,7 @@
 d_max <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE) {
   low  <- check_args(low,  x, use_data, fn = "d_max")
   high <- check_args(high, x, use_data, fn = "d_max", type = "high")
+  check_scale(scale)
 
   .comp_max(x, low, high, scale, missing)
 }
@@ -131,6 +176,8 @@ d_max <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE)
 d_min <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE) {
   low  <- check_args(low,  x, use_data, fn = "d_min")
   high <- check_args(high, x, use_data, fn = "d_min", type = "high")
+  check_scale(scale)
+
   .comp_min(x, low, high, scale, missing)
 }
 
@@ -142,6 +189,8 @@ d_target <- function(x, low, target, high, scale_low = 1, scale_high = 1,
   low    <- check_args(low,    x, use_data, fn = "d_target")
   high   <- check_args(high,   x, use_data, fn = "d_target", type = "high")
   target <- check_args(target, x, use_data, fn = "d_target", type = "target")
+  check_scale(scale_low)
+  check_scale(scale_high)
 
   .comp_target(x, low, target, high, scale_low, scale_high, missing)
 }
