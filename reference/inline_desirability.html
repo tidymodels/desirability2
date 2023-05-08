@@ -98,7 +98,11 @@ desirability.</p></dd>
 
 <dt>scale, scale_low, scale_high</dt>
 <dd><p>A single numeric value to rescale the
-desirability function.</p></dd>
+desirability function (each should be great than 0.0). Values &gt;1.0 make the
+desirability more difficult to satisfy while smaller values make it easier
+(see the examples below). <code>scale_low</code> and  <code>scale_high</code> do the same for
+target functions with <code>scale_low</code> affecting the range below the <code>target</code>
+value and <code>scale_high</code> affecting values greater than <code>target</code>.</p></dd>
 
 
 <dt>missing</dt>
@@ -129,6 +133,64 @@ included in <code>categories</code> are given the value in <code>missing</code>.
 
 <p>A numeric vector on <code>[0, 1]</code> where larger values are more
 desirable.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Each function translates the values to desirability on <code>[0, 1]</code>.</p><div class="section">
+<h3 id="equations">Equations<a class="anchor" aria-label="anchor" href="#equations"></a></h3>
+
+<div class="section">
+<h4 id="maximization">Maximization<a class="anchor" aria-label="anchor" href="#maximization"></a></h4>
+
+<ul><li><p><code>data &gt; high</code>: d = 1.0</p></li>
+<li><p><code>data &lt; low</code>: d = 0.0</p></li>
+<li><p><code>low &lt;= data &lt;= high</code>: \(d = \left(\frac{data-low}{high-low}\right)^{scale}\)</p></li>
+</ul></div>
+
+<div class="section">
+<h4 id="minimization">Minimization<a class="anchor" aria-label="anchor" href="#minimization"></a></h4>
+
+<ul><li><p><code>data &gt; high</code>: d = 0.0</p></li>
+<li><p><code>data &lt; low</code>: d = 1.0</p></li>
+<li><p><code>low &lt;= data &lt;= high</code>: \(d = \left(\frac{data = low}{low - high}\right)^{scale}\)</p></li>
+</ul></div>
+
+<div class="section">
+<h4 id="target">Target<a class="anchor" aria-label="anchor" href="#target"></a></h4>
+
+<ul><li><p><code>data &gt; high</code>: d = 0.0</p></li>
+<li><p><code>data &lt; low</code>: d = 0.0</p></li>
+<li><p><code>low &lt;= data &lt;= target</code>: \(d = \left(\frac{data - low}{target - low}\right)^{scale\_low}\)</p></li>
+<li><p><code>target &lt;= data &lt;= high</code>: \(d = \left(\frac{data - high}{target - high}\right)^{scale\_high}\)</p></li>
+</ul></div>
+
+<div class="section">
+<h4 id="minimization-1">Minimization<a class="anchor" aria-label="anchor" href="#minimization-1"></a></h4>
+
+<ul><li><p><code>data &gt; high</code>: d = 0.0</p></li>
+<li><p><code>data &lt; low</code>: d = 0.0</p></li>
+<li><p><code>low &lt;= data &lt;= high</code>:d = 1.0</p></li>
+</ul></div>
+
+<div class="section">
+<h4 id="categories">Categories<a class="anchor" aria-label="anchor" href="#categories"></a></h4>
+
+<ul><li><p><code>data = level</code>: d = 1.0</p></li>
+<li><p><code>data != level</code>: d = 0.0</p></li>
+</ul></div>
+
+<div class="section">
+<h4 id="custom">Custom<a class="anchor" aria-label="anchor" href="#custom"></a></h4>
+
+
+<p>For the sequence of values given to the function, <code>d_custom()</code> will return
+the desirability values that correspond to data matching values in <code>x_vals</code>.
+Otherwise, linear interpolation is used for values in-between.</p>
+</div>
+
+
+</div>
+
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -262,7 +324,6 @@ Several Response Variables. <em>Journal of Quality Technology</em>, 12, 214-219.
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0.267  0.411  0.832 0.472</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0.340  0.438  0.649 0.405</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 20 more rows</span></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
