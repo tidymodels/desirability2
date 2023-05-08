@@ -50,7 +50,7 @@ check_value_order <- function(low, high, target = NULL) {
   invisible(NULL)
 }
 
-check_vectors <- function(values, d) {
+is_vector_args <- function(values, d) {
   if (!is.vector(values) || !is.numeric(values)) {
     rlang::abort("'values' should be a numeric vector.")
   }
@@ -89,3 +89,14 @@ check_scale <- function(x) {
 
   invisible(NULL)
 }
+
+is_d_input <- function(x) {
+  tmp <- purrr::map(x, check_numeric, input = "desirability")
+  tmp <- purrr::map(x, check_unit_range)
+  size <- purrr::map_int(x, length)
+  if (length(unique(size)) != 1) {
+    rlang::abort("All desirability inputs should have the same length.")
+  }
+  invisible(TRUE)
+}
+
