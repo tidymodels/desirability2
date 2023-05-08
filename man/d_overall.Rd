@@ -26,6 +26,7 @@ Once desirability columns have been created, determine the overall
 desirability using a mean (geometric by default).
 }
 \examples{
+\dontshow{if (rlang::is_installed("dplyr")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)
 
 # Choose model tuning parameters that minimize the number of predictors used
@@ -48,6 +49,7 @@ classification_results \%>\%
     d_all  = d_overall(across(starts_with("d_")))
   ) \%>\%
   arrange(desc(d_all))
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=d_max]{d_max()}}

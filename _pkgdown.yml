@@ -1,0 +1,15 @@
+url: https://desirability2.tidymodels.org
+
+template:
+  bootstrap: 5
+  package: tidytemplate
+  bslib:
+    primary: '#CA225E'
+  includes:
+    in_header: |
+      <script defer data-domain="desirability2.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
+
+development:
+  mode: auto
+
+

@@ -14,7 +14,7 @@
 #' @return A numeric vector.
 #' @seealso [d_max()]
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("dplyr")
 #' library(dplyr)
 #'
 #' # Choose model tuning parameters that minimize the number of predictors used
@@ -42,7 +42,7 @@ d_overall <- function(..., geometric = TRUE, tolerance = 0) {
   d_lst <- list(...)
   d_lst <- maybe_name(d_lst)
   vals <- dplyr::bind_cols(d_lst)
-  check_d_inputs(vals)
+  is_d_input(vals)
   if (ncol(vals) == 1) {
     return(vals[[1]])
   }
@@ -85,12 +85,3 @@ geomean <- function(x, na.rm = TRUE) {
   exp(sum(log(x), na.rm = na.rm) / sum(!is.na(x)))
 }
 
-check_d_inputs <- function(x) {
-  tmp <- purrr::map(x, check_numeric, input = "desirability")
-  tmp <- purrr::map(x, check_unit_range)
-  size <- purrr::map_int(x, length)
-  if (length(unique(size)) != 1) {
-    rlang::abort("All desirability inputs should have the same length.")
-  }
-  invisible(TRUE)
-}

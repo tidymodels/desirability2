@@ -38,7 +38,11 @@ d_category(x, categories, missing = NA_real_)
 desirability.}
 
 \item{scale, scale_low, scale_high}{A single numeric value to rescale the
-desirability function.}
+desirability function (each should be great than 0.0). Values >1.0 make the
+desirability more difficult to satisfy while smaller values make it easier
+(see the examples below). \code{scale_low} and  \code{scale_high} do the same for
+target functions with \code{scale_low} affecting the range below the \code{target}
+value and \code{scale_high} affecting values greater than \code{target}.}
 
 \item{missing}{A single numeric value on \verb{[0, 1]} (or \code{NA_real_}) that
 defines how missing values in \code{x} are mapped to the desirability score.}
@@ -68,6 +72,7 @@ Currently, only the desirability functions defined by Derringer and Suich
 (1980) are implemented.
 }
 \details{
+
 \subsection{Data-Based Values}{
 
 By default, most of the \verb{d_*()} functions require specific user inputs for
@@ -75,9 +80,61 @@ arguments such as \code{low}, \code{target} and \code{high}. When \code{use_data
 functions can use the minimum, median, and maximum values of the existing
 data to estimate those values (respectively) but \emph{only when users do not
 specify them}.
+
+Each function translates the values to desirability on \verb{[0, 1]}.
+\subsection{Equations}{
+\subsection{Maximization}{
+\itemize{
+\item \code{data > high}: d = 1.0
+\item \code{data < low}: d = 0.0
+\item \verb{low <= data <= high}: \eqn{d = \left(\frac{data-low}{high-low}\right)^{scale}}
+}
+}
+
+\subsection{Minimization}{
+\itemize{
+\item \code{data > high}: d = 0.0
+\item \code{data < low}: d = 1.0
+\item \verb{low <= data <= high}: \eqn{d = \left(\frac{data = low}{low - high}\right)^{scale}}
+}
+}
+
+\subsection{Target}{
+\itemize{
+\item \code{data > high}: d = 0.0
+\item \code{data < low}: d = 0.0
+\item \verb{low <= data <= target}: \eqn{d = \left(\frac{data - low}{target - low}\right)^{scale\_low}}
+\item \verb{target <= data <= high}: \eqn{d = \left(\frac{data - high}{target - high}\right)^{scale\_high}}
+}
+}
+
+\subsection{Minimization}{
+\itemize{
+\item \code{data > high}: d = 0.0
+\item \code{data < low}: d = 0.0
+\item \verb{low <= data <= high}:d = 1.0
+}
+}
+
+\subsection{Categories}{
+\itemize{
+\item \code{data = level}: d = 1.0
+\item \code{data != level}: d = 0.0
+}
+}
+
+\subsection{Custom}{
+
+For the sequence of values given to the function, \code{d_custom()} will return
+the desirability values that correspond to data matching values in \code{x_vals}.
+Otherwise, linear interpolation is used for values in-between.
+}
+
+
 }
 }
 \examples{
+\dontshow{if (rlang::is_installed(c("dplyr", "ggplot2"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)
 library(ggplot2)
 
@@ -164,23 +221,6 @@ tibble(x = letters[1:7]) \%>\%
 dat \%>\%
   mutate(across(c(everything()), ~ d_min(., .2, .6), .names = "d_{col}"))
 
-# ------------------------------------------------------------------------------
-# Using current data
-
-set.seed(9015)
-tibble(z = c(0, sort(runif(20)), 1)) \%>\%
-  mutate(
-    user_specified = d_max(z, 0.1, 0.75),
-    data_driven   = d_max(z, use_data = TRUE)
-  ) \%>\%
-  ggplot(aes(x = z)) +
-  geom_point(aes(y = user_specified)) +
-  geom_line(aes(y = user_specified), alpha = .5) +
-  geom_point(aes(y = data_driven), col = "blue") +
-  geom_line(aes(y = data_driven), col = "blue", alpha = .5) +
-  lims(x = 0:1, y = 0:1) +
-  coord_fixed() +
-  ylab("Desirability")
 }
 \references{
 Derringer, G. and Suich, R. (1980), Simultaneous Optimization of
