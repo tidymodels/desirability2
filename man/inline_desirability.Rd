@@ -72,15 +72,6 @@ Currently, only the desirability functions defined by Derringer and Suich
 (1980) are implemented.
 }
 \details{
-
-\subsection{Data-Based Values}{
-
-By default, most of the \verb{d_*()} functions require specific user inputs for
-arguments such as \code{low}, \code{target} and \code{high}. When \code{use_data = TRUE}, the
-functions can use the minimum, median, and maximum values of the existing
-data to estimate those values (respectively) but \emph{only when users do not
-specify them}.
-
 Each function translates the values to desirability on \verb{[0, 1]}.
 \subsection{Equations}{
 \subsection{Maximization}{
@@ -130,7 +121,15 @@ the desirability values that correspond to data matching values in \code{x_vals}
 Otherwise, linear interpolation is used for values in-between.
 }
 
+}
 
+\subsection{Data-Based Values}{
+
+By default, most of the \verb{d_*()} functions require specific user inputs for
+arguments such as \code{low}, \code{target} and \code{high}. When \code{use_data = TRUE}, the
+functions can use the minimum, median, and maximum values of the existing
+data to estimate those values (respectively) but \emph{only when users do not
+specify them}.
 }
 }
 \examples{
@@ -221,6 +220,24 @@ tibble(x = letters[1:7]) \%>\%
 dat \%>\%
   mutate(across(c(everything()), ~ d_min(., .2, .6), .names = "d_{col}"))
 
+# ------------------------------------------------------------------------------
+# Using current data
+
+set.seed(9015)
+tibble(z = c(0, sort(runif(20)), 1)) \%>\%
+  mutate(
+    user_specified = d_max(z, 0.1, 0.75),
+    data_driven   = d_max(z, use_data = TRUE)
+  ) \%>\%
+  ggplot(aes(x = z)) +
+  geom_point(aes(y = user_specified)) +
+  geom_line(aes(y = user_specified), alpha = .5) +
+  geom_point(aes(y = data_driven), col = "blue") +
+  geom_line(aes(y = data_driven), col = "blue", alpha = .5) +
+  lims(x = 0:1, y = 0:1) +
+  coord_fixed() +
+  ylab("Desirability")
+\dontshow{\}) # examplesIf}
 }
 \references{
 Derringer, G. and Suich, R. (1980), Simultaneous Optimization of
