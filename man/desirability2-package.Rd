@@ -7,7 +7,7 @@
 \title{In-line desirability functions}
 \description{
 Desirability functions (Derringer and Suich, 1980,
-\url{doi:10.1080/00224065.1980.11980968}) can be used for multivariate
+\doi{10.1080/00224065.1980.11980968}) can be used for multivariate
 optimization.
 }
 \details{
