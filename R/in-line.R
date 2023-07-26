@@ -26,7 +26,7 @@
 #' @param x_vals,desirability Numeric vectors of the same length that define the
 #' desirability results at specific values of `x`. Values below and above the
 #' data in `x_vals` are given values of zero and one, respectively.
-#' @param categories A named list of desirability values that match all
+#' @param categories A named vector of desirability values that match all
 #' possible categories to specific desirability values. Data that are not
 #' included in `categories` are given the value in `missing`.
 #' @return A numeric vector on `[0, 1]` where larger values are more
@@ -55,11 +55,11 @@
 #' - `low <= data <= target`: \eqn{d = \left(\frac{data - low}{target - low}\right)^{scale\_low}}
 #' - `target <= data <= high`: \eqn{d = \left(\frac{data - high}{target - high}\right)^{scale\_high}}
 #'
-#' ### Minimization
+#' ### Box
 #'
 #' - `data > high`: d = 0.0
 #' - `data < low`: d = 0.0
-#' - `low <= data <= high`:d = 1.0
+#' - `low <= data <= high`: d = 1.0
 #'
 #' ### Categories
 #' - `data = level`: d = 1.0
