@@ -54,7 +54,7 @@ the data (\code{x}) using the minimum, maximum, or median (respectively)?}
 desirability results at specific values of \code{x}. Values below and above the
 data in \code{x_vals} are given values of zero and one, respectively.}
 
-\item{categories}{A named list of desirability values that match all
+\item{categories}{A named vector of desirability values that match all
 possible categories to specific desirability values. Data that are not
 included in \code{categories} are given the value in \code{missing}.}
 }
@@ -99,11 +99,11 @@ Each function translates the values to desirability on \verb{[0, 1]}.
 }
 }
 
-\subsection{Minimization}{
+\subsection{Box}{
 \itemize{
 \item \code{data > high}: d = 0.0
 \item \code{data < low}: d = 0.0
-\item \verb{low <= data <= high}:d = 1.0
+\item \verb{low <= data <= high}: d = 1.0
 }
 }
 
