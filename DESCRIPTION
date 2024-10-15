@@ -15,6 +15,7 @@ URL: https://desirability2.tidymodels.org,
 Depends: 
     R (>= 2.10)
 Imports: 
+    dplyr,
     glue,
     purrr,
     rlang,
@@ -22,7 +23,6 @@ Imports:
     tibble
 Suggests: 
     covr,
-    dplyr,
     ggplot2,
     spelling,
     testthat (>= 3.0.0)
