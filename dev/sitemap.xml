@@ -1,39 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/index.html</loc>
-  </url>
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/reference/classification_results.html</loc>
-  </url>
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/reference/d_overall.html</loc>
-  </url>
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/reference/desirability2-package.html</loc>
-  </url>
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://desirability2.tidymodels.org/dev/reference/inline_desirability.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://desirability2.tidymodels.org/dev/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://desirability2.tidymodels.org/dev/CONTRIBUTING.html</loc></url>
+<url><loc>https://desirability2.tidymodels.org/dev/LICENSE-text.html</loc></url>
+<url><loc>https://desirability2.tidymodels.org/dev/LICENSE.html</loc></url>
+<url><loc>https://desirability2.tidymodels.org/dev/authors.html</loc></url>
+<url><loc>https://desirability2.tidymodels.org/dev/index.html</loc></url>
+<url><loc>https://desirability2.tidymodels.org/dev/news/index.html</loc></url>
+<url><loc>https://desirability2.tidymodels.org/dev/reference/classification_results.html</loc></url>
+<url><loc>https://desirability2.tidymodels.org/dev/reference/d_overall.html</loc></url>
+<url><loc>https://desirability2.tidymodels.org/dev/reference/desirability2-package.html</loc></url>
+<url><loc>https://desirability2.tidymodels.org/dev/reference/index.html</loc></url>
+<url><loc>https://desirability2.tidymodels.org/dev/reference/inline_desirability.html</loc></url>
 </urlset>
+
