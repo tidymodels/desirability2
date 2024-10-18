@@ -251,8 +251,8 @@
     Code
       d_custom(x, x_points, letters)
     Condition
-      Error in `post_process_plurals()`:
-      ! Cannot pluralize without a quantity
+      Error in `d_custom()`:
+      ! Desirability values should be numeric and complete in the range [0, 1].
 
 ---
 
@@ -293,4 +293,12 @@
     Condition
       Error in `stop_input_type()`:
       ! `high` must be a number, not a numeric `NA`.
+
+---
+
+    Code
+      d_category(month.abb[2:4], oob)
+    Condition
+      Error in `d_category()`:
+      ! Desirability values should be numeric and complete in the range [0, 1].
 

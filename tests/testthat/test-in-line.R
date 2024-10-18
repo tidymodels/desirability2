@@ -129,6 +129,10 @@ test_that('correct values', {
     c(0.2, 0.4, 0.6)
   )
 
+  oob <- lvls
+  oob[1] <- 10
+  expect_snapshot(d_category(month.abb[2:4], oob), error = TRUE)
+
 })
 
 test_that('missing values', {

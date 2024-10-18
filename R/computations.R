@@ -45,7 +45,10 @@
 
 .comp_custom <- function(x, values, d, missing, call = rlang::caller_env()) {
   check_unit_range(missing)
-  check_unit_range(d)
+  if (!is.numeric(d) | out_of_unit_range(d)) {
+    cli::cli_abort("Desirability values should be numeric and complete in the
+                    range [0, 1].", call = call)
+  }
   check_numeric(x, call = call)
   is_vector_args(values, d)
 
@@ -81,7 +84,10 @@
 .comp_category <- function(x, values, missing, call = rlang::caller_env()) {
   check_categorical(x)
   check_unit_range(missing)
-  check_unit_range(values)
+  if (!is.numeric(values) | out_of_unit_range(values)) {
+    cli::cli_abort("Desirability values should be numeric and complete in the
+                    range [0, 1].", call = call)
+  }
 
   # make consistent factors when needed, check names, better missing handling
 
