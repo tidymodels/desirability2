@@ -140,7 +140,7 @@ test_that('correct values', {
     sqrt(res$d_feat * res$d_roc)
   )
   expect_snapshot(
-    res %>% mutate(d_all  = d_overall(across(everything()))),
+    res %>% dplyr::mutate(d_all  = d_overall(across(everything()))),
     error = TRUE
   )
 

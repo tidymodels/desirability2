@@ -67,7 +67,7 @@
     Code
       d_min(x, 0, -1)
     Condition
-      Error in `check_value_order()`:
+      Error in `d_min()`:
       ! The values should be `low < high` (actual are 0 and -1).
 
 ---
@@ -75,7 +75,7 @@
     Code
       d_min(x, 0:1, 2)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_min()`:
       ! `low` must be a number, not an integer vector.
 
 ---
@@ -83,7 +83,7 @@
     Code
       d_min(x, 0, 1:2)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_min()`:
       ! `high` must be a number, not an integer vector.
 
 ---
@@ -91,7 +91,7 @@
     Code
       d_min(x, NA_real_, 1:2)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_min()`:
       ! `low` must be a number, not a numeric `NA`.
 
 ---
@@ -99,7 +99,7 @@
     Code
       d_min(x, 0, NA_real_)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_min()`:
       ! `high` must be a number, not a numeric `NA`.
 
 ---
@@ -293,17 +293,4 @@
     Condition
       Error in `stop_input_type()`:
       ! `high` must be a number, not a numeric `NA`.
-
----
-
-    Code
-      res %>% mutate(d_all = d_overall(across(everything())))
-    Condition
-      Error in `mutate()`:
-      i In argument: `d_all = d_overall(across(everything()))`.
-      Caused by error in `purrr::map()`:
-      i In index: 6.
-      i With name: num_features.
-      Caused by error in `post_process_plurals()`:
-      ! Cannot pluralize without a quantity
 
