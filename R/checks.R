@@ -12,6 +12,11 @@ check_categorical <- function(x, call) {
   invisible(NULL)
 }
 
+out_of_unit_range <- function(x) {
+  x <- x[!is.na(x)]
+  any(x < 0 | x > 1)
+}
+
 check_unit_range <- function(x, call) {
   msg <- c(
     "Desirability values should be numeric and complete in the range [0, 1].",
@@ -22,8 +27,8 @@ check_unit_range <- function(x, call) {
   if (!is.vector(x) || !is.numeric(x)) {
     cli::cli_abort(msg, call = call)
   }
-  x <- x[!is.na(x)]
-  if (length(x) > 0 && any(x < 0 | x > 1)) {
+
+  if (out_of_unit_range(x) | length(x) > 1) {
     cli::cli_abort(msg, call = call)
   }
 
@@ -88,7 +93,12 @@ check_scale <- function(x, arg, call) {
 
 is_d_input <- function(x, call) {
   tmp <- purrr::map(x, check_numeric, input = "desirability", call = call)
-  tmp <- purrr::map(x, check_unit_range, call = call)
+  outside <- purrr::map_lgl(x, out_of_unit_range)
+  if (any(outside)) {
+    bad_cols <- names(x)[outside]
+    cli::cli_abort("{length(bad_cols)} {?of the} column{?s} {?is/are} not
+                    within {.code [0, 1]}: {.val {bad_cols}}", call = call)
+  }
   size <- purrr::map_int(x, length)
   if (length(unique(size)) != 1) {
     cli::cli_abort("All desirability inputs should have the same length.", call = call)
