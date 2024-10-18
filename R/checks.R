@@ -67,8 +67,7 @@ is_vector_args <- function(values, d, call) {
 }
 
 
-check_args <- function(arg, x, use_data, fn, type = "low",
-                       call) {
+check_args <- function(arg, x, use_data, fn, type = "low", call) {
   if (rlang::is_missing(arg)) {
     if (use_data) {
       type <- rlang::arg_match0(type, c("low", "high", "target"), error_call = call)

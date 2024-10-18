@@ -12,9 +12,9 @@
 }
 
 .comp_min <- function(x, low, high, scale, missing, call) {
-  check_unit_range(missing)
+  check_unit_range(missing, call = call)
   check_numeric(x, call = call)
-  check_value_order(low, high)
+  check_value_order(low, high, call = call)
 
   out <- rep(missing, length(x))
   out[x < low & !is.na(x)] <- 1
