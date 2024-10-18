@@ -42,7 +42,7 @@ d_overall <- function(..., geometric = TRUE, tolerance = 0) {
   d_lst <- list(...)
   d_lst <- maybe_name(d_lst)
   vals <- dplyr::bind_cols(d_lst)
-  is_d_input(vals)
+  is_d_input(vals, call = rlang::current_call())
   if (ncol(vals) == 1) {
     return(vals[[1]])
   }
