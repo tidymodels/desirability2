@@ -15,10 +15,10 @@ URL: https://desirability2.tidymodels.org,
 Depends: 
     R (>= 2.10)
 Imports: 
+    cli,
     dplyr,
-    glue,
     purrr,
-    rlang,
+    rlang (>= 1.1.0),
     stats,
     tibble
 Suggests: 
@@ -32,4 +32,4 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2

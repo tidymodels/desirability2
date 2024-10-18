@@ -1,7 +1,7 @@
-.comp_max <- function(x, low, high, scale, missing) {
+.comp_max <- function(x, low, high, scale, missing, call) {
   check_unit_range(missing)
-  check_numeric(x)
-  check_value_order(low, high)
+  check_numeric(x, call = call)
+  check_value_order(low, high, call = call)
 
   out <- rep(missing, length(x))
   out[x < low & !is.na(x)] <- 0
@@ -11,9 +11,9 @@
   out
 }
 
-.comp_min <- function(x, low, high, scale, missing) {
+.comp_min <- function(x, low, high, scale, missing, call) {
   check_unit_range(missing)
-  check_numeric(x)
+  check_numeric(x, call = call)
   check_value_order(low, high)
 
   out <- rep(missing, length(x))
@@ -25,9 +25,10 @@
 }
 
 
-.comp_target <- function(x, low, target, high, scale_low, scale_high, missing) {
+.comp_target <- function(x, low, target, high, scale_low, scale_high, missing,
+                         call = rlang::caller_env()) {
   check_unit_range(missing)
-  check_numeric(x)
+  check_numeric(x, call = call)
   check_value_order(low, high, target)
 
   out <- rep(missing, length(x))
@@ -42,10 +43,10 @@
 }
 
 
-.comp_custom <- function(x, values, d, missing) {
+.comp_custom <- function(x, values, d, missing, call = rlang::caller_env()) {
   check_unit_range(missing)
   check_unit_range(d)
-  check_numeric(x)
+  check_numeric(x, call = call)
   is_vector_args(values, d)
 
   ord <- order(values)
@@ -64,8 +65,8 @@
 }
 
 
-.comp_box <- function(x, low, high, missing) {
-  check_numeric(x)
+.comp_box <- function(x, low, high, missing, call = rlang::caller_env()) {
+  check_numeric(x, call = call)
   check_unit_range(missing)
   check_value_order(low, high)
 
@@ -77,7 +78,7 @@
 }
 
 
-.comp_category <- function(x, values, missing) {
+.comp_category <- function(x, values, missing, call = rlang::caller_env()) {
   check_categorical(x)
   check_unit_range(missing)
   check_unit_range(values)
