@@ -1,14 +1,3 @@
-suppressPackageStartupMessages(library(dplyr, quietly = TRUE))
-
-res <-
-  classification_results %>%
-  mutate(
-    d_feat = d_min(num_features, 1, 200),
-    d_roc  = d_max(roc_auc, 0.5, 0.9)
-  )
-
-# ------------------------------------------------------------------------------
-
 test_that('D&S examples page 218', {
   expect_equal(d_max(129.5, 120, 170), .189, tolerance = .01)           # pico
   expect_equal(d_max(1300, 1000, 1300), 1, tolerance = .01)             # modulus
