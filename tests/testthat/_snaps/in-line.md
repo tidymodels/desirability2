@@ -131,7 +131,7 @@
     Code
       d_target(x, 0:1, 2, 3)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_target()`:
       ! `low` must be a number, not an integer vector.
 
 ---
@@ -139,7 +139,7 @@
     Code
       d_target(x, 0, 1:2, 3)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_target()`:
       ! `target` must be a number or `NULL`, not an integer vector.
 
 ---
@@ -147,7 +147,7 @@
     Code
       d_target(x, 0, 1, 2:3)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_target()`:
       ! `high` must be a number, not an integer vector.
 
 ---
@@ -155,7 +155,7 @@
     Code
       d_target(x, NA_real_, 1, 2)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_target()`:
       ! `low` must be a number, not a numeric `NA`.
 
 ---
@@ -163,7 +163,7 @@
     Code
       d_target(x, 0, NA_real_, 1)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_target()`:
       ! `target` must be a number or `NULL`, not a numeric `NA`.
 
 ---
@@ -171,7 +171,7 @@
     Code
       d_target(x, 0, 1, NA_real_)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_target()`:
       ! `high` must be a number, not a numeric `NA`.
 
 ---
@@ -227,23 +227,23 @@
     Code
       d_custom(x, x_points[-1], d_points)
     Condition
-      Error in `is_vector_args()`:
-      ! '`values`' and '`d`' should be the same length.
+      Error in `d_custom()`:
+      ! `values` (4) and `d` (5) should be the same length.
 
 ---
 
     Code
       d_custom(x, x_points, d_points[-1])
     Condition
-      Error in `is_vector_args()`:
-      ! '`values`' and '`d`' should be the same length.
+      Error in `d_custom()`:
+      ! `values` (5) and `d` (4) should be the same length.
 
 ---
 
     Code
       d_custom(x, letters, d_points)
     Condition
-      Error in `is_vector_args()`:
+      Error in `d_custom()`:
       ! `values` should be a numeric vector.
 
 ---
@@ -259,7 +259,7 @@
     Code
       d_box(x, 0, -1)
     Condition
-      Error in `check_value_order()`:
+      Error in `d_box()`:
       ! The values should be `low < high` (actual are 0 and -1).
 
 ---
@@ -267,7 +267,7 @@
     Code
       d_box(x, 0:1, 2)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_box()`:
       ! `low` must be a number, not an integer vector.
 
 ---
@@ -275,7 +275,7 @@
     Code
       d_box(x, 0, 1:2)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_box()`:
       ! `high` must be a number, not an integer vector.
 
 ---
@@ -283,7 +283,7 @@
     Code
       d_box(x, NA_real_, 1:2)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_box()`:
       ! `low` must be a number, not a numeric `NA`.
 
 ---
@@ -291,7 +291,7 @@
     Code
       d_box(x, 0, NA_real_)
     Condition
-      Error in `stop_input_type()`:
+      Error in `d_box()`:
       ! `high` must be a number, not a numeric `NA`.
 
 ---
