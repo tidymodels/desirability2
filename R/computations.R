@@ -1,4 +1,4 @@
-.comp_max <- function(x, low, high, scale, missing, call) {
+.comp_max <- function(x, low, high, scale, missing, call = rlang::caller_env()) {
   check_unit_range(missing, call = call)
   check_numeric(x, call = call)
   check_value_order(low, high, call = call)
@@ -11,7 +11,7 @@
   out
 }
 
-.comp_min <- function(x, low, high, scale, missing, call) {
+.comp_min <- function(x, low, high, scale, missing, call = rlang::caller_env()) {
   check_unit_range(missing, call = call)
   check_numeric(x, call = call)
   check_value_order(low, high, call = call)

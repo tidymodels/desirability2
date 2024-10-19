@@ -191,9 +191,9 @@
 d_max <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE) {
   low  <- check_args(low,  x, use_data, fn = "d_max")
   high <- check_args(high, x, use_data, fn = "d_max", type = "high")
-  check_scale(scale, arg = "scale", call = rlang::current_call())
+  check_scale(scale, arg = "scale")
 
-  .comp_max(x, low, high, scale, missing, call = rlang::current_call())
+  .comp_max(x, low, high, scale, missing)
 }
 
 #' @rdname inline_desirability
@@ -201,9 +201,9 @@ d_max <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE)
 d_min <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE) {
   low  <- check_args(low,  x, use_data, fn = "d_min")
   high <- check_args(high, x, use_data, fn = "d_min", type = "high")
-  check_scale(scale, arg = "scale", call = rlang::current_call())
+  check_scale(scale, arg = "scale")
 
-  .comp_min(x, low, high, scale, missing, call = rlang::current_call())
+  .comp_min(x, low, high, scale, missing)
 }
 
 
@@ -214,11 +214,10 @@ d_target <- function(x, low, target, high, scale_low = 1, scale_high = 1,
   low    <- check_args(low,    x, use_data, fn = "d_target")
   high   <- check_args(high,   x, use_data, fn = "d_target", type = "high")
   target <- check_args(target, x, use_data, fn = "d_target", type = "target")
-  check_scale(scale_low, arg = "scale_low", call = rlang::current_call())
-  check_scale(scale_high, arg = "scale_high", call = rlang::current_call())
+  check_scale(scale_low, arg = "scale_low")
+  check_scale(scale_high, arg = "scale_high")
 
-  .comp_target(x, low, target, high, scale_low, scale_high, missing,
-               call = rlang::current_call())
+  .comp_target(x, low, target, high, scale_low, scale_high, missing)
 }
 
 
@@ -227,18 +226,18 @@ d_target <- function(x, low, target, high, scale_low = 1, scale_high = 1,
 d_box <- function(x, low, high, missing = NA_real_, use_data = FALSE) {
   low  <- check_args(low,  x, use_data, fn = "d_box")
   high <- check_args(high, x, use_data, fn = "d_box", type = "high")
-  .comp_box(x, low, high, missing, call = rlang::current_call())
+  .comp_box(x, low, high, missing)
 }
 
 #' @rdname inline_desirability
 #' @export
 d_custom <- function(x, x_vals, desirability, missing = NA_real_) {
-  .comp_custom(x, x_vals, desirability, missing, call = rlang::current_call())
+  .comp_custom(x, x_vals, desirability, missing)
 }
 
 
 #' @rdname inline_desirability
 #' @export
 d_category <- function(x, categories, missing = NA_real_) {
-  .comp_category(x, categories, missing, call = rlang::current_call())
+  .comp_category(x, categories, missing)
 }

@@ -1,11 +1,11 @@
-check_numeric <- function(x, input = "`x`", call) {
+check_numeric <- function(x, input = "`x`", call = rlang::caller_env()) {
   if (!is.vector(x) || !is.numeric(x)) {
     cli::cli_abort("{.arg {input}} should be {an} numeric vector.")
   }
   invisible(NULL)
 }
 
-check_categorical <- function(x, call) {
+check_categorical <- function(x, call = rlang::caller_env()) {
   if (!is.character(x) & !is.factor(x)) {
     cli::cli_abort(
       "{.arg x} should be a character or factor vector,
@@ -21,7 +21,7 @@ out_of_unit_range <- function(x) {
   any(x < 0 | x > 1)
 }
 
-check_unit_range <- function(x, call) {
+check_unit_range <- function(x, call = rlang::caller_env()) {
 
   msg <- c(
     "Desirability values should be numeric and complete in the range [0, 1]."
@@ -42,7 +42,7 @@ check_unit_range <- function(x, call) {
   invisible(NULL)
 }
 
-check_value_order <- function(low, high, target = NULL, call) {
+check_value_order <- function(low, high, target = NULL, call = rlang::caller_env()) {
   check_number_decimal(low, call = call)
   check_number_decimal(high, call = call)
   check_number_decimal(target, allow_null = TRUE, call = call)
@@ -64,7 +64,7 @@ check_value_order <- function(low, high, target = NULL, call) {
   invisible(NULL)
 }
 
-check_vector_args <- function(values, d, call) {
+check_vector_args <- function(values, d, call = rlang::caller_env()) {
   if (!is.vector(values) || !is.numeric(values)) {
     cli::cli_abort("{.arg values} should be a numeric vector.", call = call)
   }
@@ -93,12 +93,12 @@ check_args <- function(arg, x, use_data, fn, type = "low", call = rlang::caller_
   arg
 }
 
-check_scale <- function(x, arg, call) {
+check_scale <- function(x, arg, call = rlang::caller_env()) {
   check_number_decimal(x, min = 0, arg = arg, call = call)
   invisible(NULL)
 }
 
-is_d_input <- function(x, call) {
+is_d_input <- function(x, call = rlang::caller_env()) {
   tmp <- purrr::map(x, check_numeric, input = "desirability", call = call)
   outside <- purrr::map_lgl(x, out_of_unit_range)
   if (any(outside)) {
