@@ -50,7 +50,7 @@
                     range [0, 1].", call = call)
   }
   check_numeric(x, call = call)
-  is_vector_args(values, d, call = call)
+  check_vector_args(values, d, call = call)
 
   ord <- order(values)
   values <- values[ord]

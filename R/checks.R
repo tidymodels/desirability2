@@ -64,7 +64,7 @@ check_value_order <- function(low, high, target = NULL, call) {
   invisible(NULL)
 }
 
-is_vector_args <- function(values, d, call) {
+check_vector_args <- function(values, d, call) {
   if (!is.vector(values) || !is.numeric(values)) {
     cli::cli_abort("{.arg values} should be a numeric vector.", call = call)
   }
