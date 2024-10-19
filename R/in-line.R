@@ -191,7 +191,7 @@
 d_max <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE) {
   low  <- check_args(low,  x, use_data, fn = "d_max")
   high <- check_args(high, x, use_data, fn = "d_max", type = "high")
-  check_scale(scale)
+  check_scale(scale, arg = "scale")
 
   .comp_max(x, low, high, scale, missing)
 }
@@ -201,7 +201,7 @@ d_max <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE)
 d_min <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE) {
   low  <- check_args(low,  x, use_data, fn = "d_min")
   high <- check_args(high, x, use_data, fn = "d_min", type = "high")
-  check_scale(scale)
+  check_scale(scale, arg = "scale")
 
   .comp_min(x, low, high, scale, missing)
 }
@@ -214,8 +214,8 @@ d_target <- function(x, low, target, high, scale_low = 1, scale_high = 1,
   low    <- check_args(low,    x, use_data, fn = "d_target")
   high   <- check_args(high,   x, use_data, fn = "d_target", type = "high")
   target <- check_args(target, x, use_data, fn = "d_target", type = "target")
-  check_scale(scale_low)
-  check_scale(scale_high)
+  check_scale(scale_low, arg = "scale_low")
+  check_scale(scale_high, arg = "scale_high")
 
   .comp_target(x, low, target, high, scale_low, scale_high, missing)
 }

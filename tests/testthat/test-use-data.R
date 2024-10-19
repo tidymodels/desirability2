@@ -1,12 +1,3 @@
-
-
-set.seed(1)
-dat <- rnorm(100)
-mn <- min(dat)
-mx <- max(dat)
-md <- median(dat)
-
-
 test_that('using data for bounds', {
 
   expect_equal(
@@ -17,8 +8,8 @@ test_that('using data for bounds', {
     d_max(dat, low = 0, high = mx),
     d_max(dat, low = 0, use_data = TRUE)
   )
-  expect_snapshot_error(d_max(dat, high = 2))
-  expect_snapshot_error(d_max(dat, low = 2))
+  expect_snapshot(d_max(dat, high = 2), error = TRUE)
+  expect_snapshot(d_max(dat, low = 2), error = TRUE)
 
   # ----------------------------------------------------------------------------
 
@@ -30,8 +21,8 @@ test_that('using data for bounds', {
     d_min(dat, low = 0, high = mx),
     d_min(dat, low = 0, use_data = TRUE)
   )
-  expect_snapshot_error(d_min(dat, high = 2))
-  expect_snapshot_error(d_min(dat, low = 2))
+  expect_snapshot(d_min(dat, high = 2), error = TRUE)
+  expect_snapshot(d_min(dat, low = 2), error = TRUE)
 
   # ----------------------------------------------------------------------------
 
@@ -43,8 +34,8 @@ test_that('using data for bounds', {
     d_box(dat, low = 0, high = mx),
     d_box(dat, low = 0, use_data = TRUE)
   )
-  expect_snapshot_error(d_box(dat, high = 2))
-  expect_snapshot_error(d_box(dat, low = 2))
+  expect_snapshot(d_box(dat, high = 2), error = TRUE)
+  expect_snapshot(d_box(dat, low = 2), error = TRUE)
 
   # ----------------------------------------------------------------------------
 
@@ -60,9 +51,9 @@ test_that('using data for bounds', {
     d_target(dat, low = -1, target = 2, high = mx),
     d_target(dat, low = -1, target = 2, use_data = TRUE)
   )
-  expect_snapshot_error(d_target(dat, target = 2, high = 2))
-  expect_snapshot_error(d_target(dat, low = 2, high = 2))
-  expect_snapshot_error(d_target(dat, low = 2, target = 2))
+  expect_snapshot(d_target(dat, target = 2, high = 2), error = TRUE)
+  expect_snapshot(d_target(dat, low = 2, high = 2), error = TRUE)
+  expect_snapshot(d_target(dat, low = 2, target = 2), error = TRUE)
 
 })
 
