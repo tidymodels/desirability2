@@ -8,7 +8,7 @@ check_numeric <- function(x, input = "`x`", call) {
 check_categorical <- function(x, call) {
   if (!is.character(x) & !is.factor(x)) {
     cli::cli_abort(
-      "{.arg x} should be a character or factor vector, 
+      "{.arg x} should be a character or factor vector,
       not {.obj_type_friendly {x}}.",
       call = call
      )
@@ -22,17 +22,20 @@ out_of_unit_range <- function(x) {
 }
 
 check_unit_range <- function(x, call) {
+
   msg <- c(
-    "Desirability values should be numeric and complete in the range [0, 1].",
-    "i" = "Current values are {.obj_type_friendly {x}}.",
-    "i" = "{?Some v/V}alue{?s} {?are/is} outside the [0, 1] range."
+    "Desirability values should be numeric and complete in the range [0, 1]."
   )
 
   if (!is.vector(x) || !is.numeric(x)) {
+    msg <- c(msg, "i" = "Current values are {.obj_type_friendly {x}}.")
     cli::cli_abort(msg, call = call)
   }
 
-  if (out_of_unit_range(x) | length(x) > 1) {
+  if (out_of_unit_range(x) || length(x) > 1) {
+    offenders <- sum(x < 0 | x > 1)
+    msg <- c(msg, "i" = "{offenders} value{?s} {?is/are} outside the [0, 1] range.")
+
     cli::cli_abort(msg, call = call)
   }
 
