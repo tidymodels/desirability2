@@ -7,7 +7,11 @@ check_numeric <- function(x, input = "`x`", call) {
 
 check_categorical <- function(x, call) {
   if (!is.character(x) & !is.factor(x)) {
-    cli::cli_abort("{.arg x} should be a character or factor vector.")
+    cli::cli_abort(
+      "{.arg x} should be a character or factor vector, 
+      not {.obj_type_friendly {x}}.",
+      call = call
+     )
   }
   invisible(NULL)
 }
@@ -65,14 +69,14 @@ is_vector_args <- function(values, d, call) {
     cli::cli_abort("'d' should be a numeric vector.", call = call)
   }
   if (length(values) != length(d)) {
-    cli::cli_abort("'{.arg values}' and '{.arg d}' should be the same length.",
+    cli::cli_abort("{.arg values} ({length(values)}) and {.arg d} ({length(d)}) should be the same length.",
                    call = call)
   }
   invisible(TRUE)
 }
 
 
-check_args <- function(arg, x, use_data, fn, type = "low", call) {
+check_args <- function(arg, x, use_data, fn, type = "low", call = rlang::caller_env()) {
   if (rlang::is_missing(arg)) {
     if (use_data) {
       type <- rlang::arg_match0(type, c("low", "high", "target"), error_call = call)
