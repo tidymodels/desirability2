@@ -1,6 +1,6 @@
-check_numeric <- function(x, input = "`x`", call = rlang::caller_env()) {
+check_numeric <- function(x, input = "x", call = rlang::caller_env()) {
   if (!is.vector(x) || !is.numeric(x)) {
-    cli::cli_abort("{.arg {input}} should be {an} numeric vector.")
+    cli::cli_abort("{.arg {input}} should be a numeric vector.")
   }
   invisible(NULL)
 }

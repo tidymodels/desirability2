@@ -1,9 +1,4 @@
 
-test_that('tolerance values', {
-
-
-})
-
 test_that('overall desirability computations', {
 
   expect_equal(
