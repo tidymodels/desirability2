@@ -133,6 +133,11 @@ test_that('correct values', {
   oob[1] <- 10
   expect_snapshot(d_category(month.abb[2:4], oob), error = TRUE)
 
+  # ------------------------------------------------------------------------------
+
+  expect_snapshot(d_min(letters, 1, 2), error = TRUE)
+  expect_snapshot(d_min(letters[1], 1, 2), error = TRUE)
+
 })
 
 test_that('missing values', {

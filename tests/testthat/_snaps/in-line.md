@@ -302,3 +302,19 @@
       Error in `d_category()`:
       ! Desirability values should be numeric and complete in the range [0, 1].
 
+---
+
+    Code
+      d_min(letters, 1, 2)
+    Condition
+      Error in `check_numeric()`:
+      ! `x` should be a numeric vector.
+
+---
+
+    Code
+      d_min(letters[1], 1, 2)
+    Condition
+      Error in `check_numeric()`:
+      ! `x` should be a numeric vector.
+
