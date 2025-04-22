@@ -1,7 +1,7 @@
 # overall desirability computations
 
     Code
-      res %>% dplyr::mutate(d_all = d_overall(across(everything())))
+      dplyr::mutate(res, d_all = d_overall(across(everything())))
     Condition
       Error in `dplyr::mutate()`:
       i In argument: `d_all = d_overall(across(everything()))`.

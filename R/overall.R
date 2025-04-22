@@ -20,22 +20,22 @@
 #' # Choose model tuning parameters that minimize the number of predictors used
 #' # while maximizing the area under the ROC curve.
 #'
-#' classification_results %>%
+#' classification_results |>
 #'   mutate(
 #'     d_feat = d_min(num_features, 1, 200),
 #'     d_roc  = d_max(roc_auc, 0.5, 0.9),
 #'     d_all  = d_overall(across(starts_with("d_")))
-#'   ) %>%
+#'   ) |>
 #'   arrange(desc(d_all))
 #'
 #' # Bias the ranking toward minimizing features by using a larger scale.
 #'
-#' classification_results %>%
+#' classification_results |>
 #'   mutate(
 #'     d_feat = d_min(num_features, 1, 200, scale = 3),
 #'     d_roc  = d_max(roc_auc, 0.5, 0.9),
 #'     d_all  = d_overall(across(starts_with("d_")))
-#'   ) %>%
+#'   ) |>
 #'   arrange(desc(d_all))
 
 d_overall <- function(..., geometric = TRUE, tolerance = 0) {

@@ -8,6 +8,7 @@ Suich
 doi
 dplyr
 funder
+magrittr
 reprex
 rescale
 tibble

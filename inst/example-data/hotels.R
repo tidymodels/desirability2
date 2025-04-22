@@ -7,7 +7,7 @@ theme_set(theme_bw())
 # Variation of https://www.tidymodels.org/start/case-study/
 
 hotels <-
-  read_csv('https://tidymodels.org/start/case-study/hotels.csv') %>%
+  read_csv('https://tidymodels.org/start/case-study/hotels.csv') |>
   mutate_if(is.character, as.factor)
 
 
@@ -18,13 +18,13 @@ hotel_other <- training(splits)
 hotel_test  <- testing(splits)
 
 # training set proportions by children
-hotel_other %>%
-  count(children) %>%
+hotel_other |>
+  count(children) |>
   mutate(prop = n/sum(n))
 
 # test set proportions by children
-hotel_test  %>%
-  count(children) %>%
+hotel_test  |>
+  count(children) |>
   mutate(prop = n/sum(n))
 
 set.seed(234)
@@ -38,24 +38,24 @@ lr_reg_grid <-
            mixture = seq(0, 1, length = 10))
 
 lr_mod <-
-  logistic_reg(penalty = tune(), mixture = tune()) %>%
+  logistic_reg(penalty = tune(), mixture = tune()) |>
   set_engine("glmnet", path_values = unique(lr_reg_grid$penalty))
 
 holidays <- c("AllSouls", "AshWednesday", "ChristmasEve", "Easter",
               "ChristmasDay", "GoodFriday", "NewYearsDay", "PalmSunday")
 
 lr_recipe <-
-  recipe(children ~ ., data = hotel_other) %>%
-  step_date(arrival_date) %>%
-  step_holiday(arrival_date, holidays = holidays) %>%
-  step_rm(arrival_date) %>%
-  step_dummy(all_nominal(), -all_outcomes()) %>%
-  step_zv(all_predictors()) %>%
+  recipe(children ~ ., data = hotel_other) |>
+  step_date(arrival_date) |>
+  step_holiday(arrival_date, holidays = holidays) |>
+  step_rm(arrival_date) |>
+  step_dummy(all_nominal(), -all_outcomes()) |>
+  step_zv(all_predictors()) |>
   step_normalize(all_predictors())
 
 lr_workflow <-
-  workflow() %>%
-  add_model(lr_mod) %>%
+  workflow() |>
+  add_model(lr_mod) |>
   add_recipe(lr_recipe)
 
 glmnet_vars <- function(x) {
@@ -68,32 +68,32 @@ glmnet_vars <- function(x) {
 ctrl <- control_grid(extract = glmnet_vars, verbose = TRUE)
 
 lr_res <-
-  lr_workflow %>%
+  lr_workflow |>
   tune_grid(val_set,
             grid = lr_reg_grid,
             metrics = metric_set(roc_auc, pr_auc, mn_log_loss),
             control = ctrl)
 
 metrics <-
-  collect_metrics(lr_res) %>%
-  select(-.estimator, -n, -std_err) %>%
+  collect_metrics(lr_res) |>
+  select(-.estimator, -n, -std_err) |>
   pivot_wider(names_from = c(.metric), values_from = c(mean))
 
 
 classification_results <-
-  lr_res %>%
-  dplyr::select(.extracts) %>%
-  unnest(cols = .extracts) %>%
-  dplyr::select(-penalty, -.config) %>%
-  group_by(mixture) %>%
-  slice(1) %>%
-  ungroup() %>%
-  unnest(cols = .extracts) %>%
+  lr_res |>
+  dplyr::select(.extracts) |>
+  unnest(cols = .extracts) |>
+  dplyr::select(-penalty, -.config) |>
+  group_by(mixture) |>
+  slice(1) |>
+  ungroup() |>
+  unnest(cols = .extracts) |>
   full_join(
     metrics,
     by = c("penalty", "mixture")
-  ) %>%
-  relocate(num_features, .after = "roc_auc") %>%
+  ) |>
+  relocate(num_features, .after = "roc_auc") |>
   select(-.config)
 
 usethis::use_data(classification_results)
