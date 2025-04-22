@@ -13,7 +13,7 @@ License: MIT + file LICENSE
 URL: https://desirability2.tidymodels.org,
     https://github.com/tidymodels/desirability2
 Depends: 
-    R (>= 2.10)
+    R (>= 4.1)
 Imports: 
     cli,
     dplyr,

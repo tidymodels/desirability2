@@ -77,13 +77,13 @@ along with a call to the function that blends these values using a
 geometric mean:
 
 ``` r
-classification_results %>% 
-  select(-mn_log_loss, -pr_auc) %>% 
+classification_results |> 
+  select(-mn_log_loss, -pr_auc) |> 
   mutate(
     d_roc   = d_max(roc_auc, low = 1/2, high = 1), 
     d_terms = d_min(num_features, low = 1, high = 50),
     d_both    = d_overall(d_roc, d_terms)
-  ) %>% 
+  ) |> 
   # rank from most desirable to least:
   arrange(desc(d_both))
 #> # A tibble: 300 × 7

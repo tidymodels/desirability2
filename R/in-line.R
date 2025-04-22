@@ -92,15 +92,15 @@
 #' dat <- tibble(x = sort(runif(30)), y = sort(runif(30)))
 #' d_max(dat$x[1:10], 0.1, 0.75)
 #'
-#' dat %>%
+#' dat |>
 #'   mutate(d_x = d_max(x, 0.1, 0.75))
 #'
 #' set.seed(2)
-#' tibble(z = sort(runif(100))) %>%
+#' tibble(z = sort(runif(100))) |>
 #'   mutate(
 #'     no_scale = d_max(z, 0.1, 0.75),
 #'     easier   = d_max(z, 0.1, 0.75, scale = 1/2)
-#'   ) %>%
+#'   ) |>
 #'   ggplot(aes(x = z)) +
 #'   geom_point(aes(y = no_scale)) +
 #'   geom_line(aes(y = no_scale), alpha = .5) +
@@ -113,10 +113,10 @@
 #' # ------------------------------------------------------------------------------
 #' # Target example
 #'
-#' dat %>%
+#' dat |>
 #'   mutate(
 #'     triangle = d_target(x, 0.1, 0.5, 0.9, scale_low = 2, scale_high = 1/2)
-#'   ) %>%
+#'   ) |>
 #'   ggplot(aes(x = x, y = triangle)) +
 #'   geom_point() +
 #'   geom_line(alpha = .5) +
@@ -127,8 +127,8 @@
 #' # ------------------------------------------------------------------------------
 #' # Box constraints
 #'
-#' dat %>%
-#'   mutate(box = d_box(x, 1/4, 3/4)) %>%
+#' dat |>
+#'   mutate(box = d_box(x, 1/4, 3/4)) |>
 #'   ggplot(aes(x = x, y = box)) +
 #'   geom_point() +
 #'   geom_line(alpha = .5) +
@@ -142,8 +142,8 @@
 #' v_x <- seq(0, 1, length.out = 20)
 #' v_d <- 1 - exp(-10 * abs(v_x - .5))
 #'
-#' dat %>%
-#'   mutate(v = d_custom(x, v_x, v_d)) %>%
+#' dat |>
+#'   mutate(v = d_custom(x, v_x, v_d)) |>
 #'   ggplot(aes(x = x, y = v)) +
 #'   geom_point() +
 #'   geom_line(alpha = .5) +
@@ -158,8 +158,8 @@
 #' groups <- sort(runif(10))
 #' names(groups) <- letters[1:10]
 #'
-#' tibble(x = letters[1:7]) %>%
-#'   mutate(d = d_category(x, groups)) %>%
+#' tibble(x = letters[1:7]) |>
+#'   mutate(d = d_category(x, groups)) |>
 #'   ggplot(aes(x = x, y = d)) +
 #'   geom_bar(stat = "identity") +
 #'   lims(y = 0:1) +
@@ -168,18 +168,18 @@
 #' # ------------------------------------------------------------------------------
 #' # Apply the same function to many columns at once (dplyr > 1.0)
 #'
-#' dat %>%
+#' dat |>
 #'   mutate(across(c(everything()), ~ d_min(., .2, .6), .names = "d_{col}"))
 #'
 #' # ------------------------------------------------------------------------------
 #' # Using current data
 #'
 #' set.seed(9015)
-#' tibble(z = c(0, sort(runif(20)), 1)) %>%
+#' tibble(z = c(0, sort(runif(20)), 1)) |>
 #'   mutate(
 #'     user_specified = d_max(z, 0.1, 0.75),
 #'     data_driven   = d_max(z, use_data = TRUE)
-#'   ) %>%
+#'   ) |>
 #'   ggplot(aes(x = z)) +
 #'   geom_point(aes(y = user_specified)) +
 #'   geom_line(aes(y = user_specified), alpha = .5) +
