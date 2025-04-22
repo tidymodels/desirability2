@@ -8,10 +8,10 @@
 <title>Desirability Functions for Multiparameter Optimization • desirability2</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/Source_Sans_Pro-0.4.9/font.css" rel="stylesheet">
-<link href="deps/Source_Code_Pro-0.4.9/font.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/Source_Sans_Pro-0.4.10/font.css" rel="stylesheet">
+<link href="deps/Source_Code_Pro-0.4.10/font.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Desirability Functions for Multiparameter Optimization">
 <meta name="description" content="In-line functions for multivariate optimization via desirability functions (Derringer and Suich, 1980, &lt;doi:10.1080/00224065.1980.11980968&gt;) with easy use within `dplyr` pipelines.">
 <meta property="og:description" content="In-line functions for multivariate optimization via desirability functions (Derringer and Suich, 1980, &lt;doi:10.1080/00224065.1980.11980968&gt;) with easy use within `dplyr` pipelines.">
@@ -88,13 +88,13 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/inline_desirability.html">d_min</a></span><span class="op">(</span><span class="va">num_features</span>, low <span class="op">=</span> <span class="fl">1</span>, high <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
 <p>We can add these as columns to the data using a <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> statement along with a call to the function that blends these values using a geometric mean:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">classification_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mn_log_loss</span>, <span class="op">-</span><span class="va">pr_auc</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">classification_results</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mn_log_loss</span>, <span class="op">-</span><span class="va">pr_auc</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    d_roc   <span class="op">=</span> <span class="fu"><a href="reference/inline_desirability.html">d_max</a></span><span class="op">(</span><span class="va">roc_auc</span>, low <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, high <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, </span>
 <span>    d_terms <span class="op">=</span> <span class="fu"><a href="reference/inline_desirability.html">d_min</a></span><span class="op">(</span><span class="va">num_features</span>, low <span class="op">=</span> <span class="fl">1</span>, high <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>,</span>
 <span>    d_both    <span class="op">=</span> <span class="fu"><a href="reference/d_overall.html">d_overall</a></span><span class="op">(</span><span class="va">d_roc</span>, <span class="va">d_terms</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="co"># rank from most desirable to least:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">d_both</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 300 × 7</span></span>
@@ -173,7 +173,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://app.codecov.io/gh/tidymodels/desirability2?branch=main" class="external-link"><img src="https://codecov.io/gh/tidymodels/desirability2/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://app.codecov.io/gh/tidymodels/desirability2" class="external-link"><img src="https://codecov.io/gh/tidymodels/desirability2/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/tidymodels/desirability2/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/tidymodels/desirability2/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
