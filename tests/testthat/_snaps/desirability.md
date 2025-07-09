@@ -64,7 +64,7 @@
       target(a, low = 1, target = 2, high = 3, scale_low = 2)
       
       [[2]]
-      category(b, list(a = 0.1, b = 0.2, c = 0.3))
+      category(b, categories = list(a = 0.1, b = 0.2, c = 0.3))
       
       [[3]]
       constrain(x, low = 1, high = 2)
@@ -79,7 +79,7 @@
       d_target(a, low = 1, target = 2, high = 3, scale_low = 2, use_data = TRUE)
       
       [[2]]
-      d_category(b, list(a = 0.1, b = 0.2, c = 0.3), use_data = TRUE)
+      d_category(b, categories = list(a = 0.1, b = 0.2, c = 0.3), use_data = TRUE)
       
       [[3]]
       d_box(x, low = 1, high = 2, use_data = TRUE)
@@ -125,22 +125,46 @@
     Code
       desirability(1)
     Condition
-      Error in `check_first_arg()`:
-      ! 1 optimization term has no arguments. At least one is needed.
+      Error:
+      ! There needs to be at least one argument to the optimization goal functions.
 
 ---
 
     Code
       desirability(maximize(happiness), 1)
     Condition
-      Error in `check_first_arg()`:
-      ! 1 optimization term has no arguments. At least one is needed.
+      Error:
+      ! There needs to be at least one argument to the optimization goal functions.
 
 ---
 
     Code
       desirability(monitize(synergies))
     Condition
-      Error in `check_fn_args()`:
+      Error:
       ! The following functions are unknown to the desirability2 package: `monitize()`. Please use one of: `minimize()`, `maximize()`, `constrain()`, `target()`, or `category()`.
+
+---
+
+    Code
+      desirability(maximize(happiness, 1))
+    Condition
+      Error:
+      ! 1 optimization goal has additional arguments that are not named. All but the first argument should be named.
+
+---
+
+    Code
+      desirability(maximize(argument = happiness))
+    Condition
+      Error:
+      ! 1 optimization goal has a first argument that is named. It should be unnamed.
+
+---
+
+    Code
+      desirability(maximize(happiness, 1), )
+    Condition
+      Error:
+      ! 1 optimization goal has additional arguments that are not named. All but the first argument should be named.
 

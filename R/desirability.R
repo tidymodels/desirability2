@@ -34,7 +34,7 @@ desirability_set <- S7::new_class(
   )
 )
 
-S7::method(print, desirability_set) <- function(x) {
+S7::method(print, desirability_set) <- function(x, ...) {
     cli::cli_inform("Simultaneous Optimization via Desirability Functions")
     cat("\n")
     vals <- sort(unique(unlist(x@variables)))
@@ -85,7 +85,7 @@ desirability <- function(..., .use_data = FALSE) {
   if (length(raw_inputs) == 0) {
     cli::cli_abort("At least one optimization goal (e.g., {.fn maximize}) should be declared.")
   }
-  check_first_arg(raw_inputs)
+  check_arg_names(raw_inputs)
   check_fn_args(raw_inputs, all_f)
 
 
@@ -103,7 +103,7 @@ desirability <- function(..., .use_data = FALSE) {
 # ------------------------------------------------------------------------------
 # Validation functions
 
-check_fn_args <- function(x, vals) {
+check_fn_args <- function(x, vals, call = rlang::env_parent()) {
   fns <- purrr::map_chr(x, ~ rlang::expr_deparse(.x[[1]])) # TODO don't need to deparse
   vals_chr <- purrr::map_chr(vals, ~ rlang::expr_deparse(.x))
 
@@ -111,38 +111,67 @@ check_fn_args <- function(x, vals) {
   if (any(!is_good)) {
     cli::cli_abort(
       "The following functions are unknown to the  {.pkg desirability2} package:
-		{.fn {fns[!is_good]}}. Please use one of: {.or {.fn {all_f}}}."
+		{.fn {fns[!is_good]}}. Please use one of: {.or {.fn {all_f}}}.",
+      call = call
     )
   }
   invisible(TRUE)
 }
 
-check_first_arg <- function(x) {
-  num_args <- purrr::map_int(x, length) - 1L
-  zero_args <- sum(num_args == 0)
-  if (any(zero_args)) {
-    cli::cli_abort(
-      "{sum(zero_args)} optimization term{?s} {?has/have} no arguments.
-       At least one is needed."
-    )
+get_nms <- function(x) {
+  res <- names(x)
+  if (is.null(res)) {
+    res <- rep("", length(x))
   }
-  bad_first_name <- purrr::map_lgl(x, missing_first_name)
-  if (any(bad_first_name)) {
-    cli::cli_abort("The first argument to the optimization terms should be unnamed.")
-  }
-  invisible(TRUE)
+  # first name is for function
+  res[-1]
 }
 
-missing_first_name <- function(x) {
+get_num_nms <- function(x) {
   if (is.null(x)) {
-    return(TRUE)
-  }
-  if (x[2] == "") {
-    res <- TRUE
+    res <- 0
   } else {
-    res <- FALSE
+    res <- length(x)
   }
   res
+}
+
+check_arg_names <- function(x, call = rlang::env_parent()) {
+  num_args <- purrr::map_int(x, length) - 1L
+
+  if (any(num_args == 0)) {
+    cli::cli_abort(
+      "There needs to be at least one argument to the optimization goal
+      functions.",
+      call = call
+    )
+  }
+
+  nms <- purrr::map(x, get_nms)
+  num_nms <- purrr::map_int(nms, get_num_nms)
+  good_first_nm <- purrr::map_lgl(nms, ~ .x[1] == "")
+
+  if (any(!good_first_nm)) {
+    bad_first_nms <- which(!good_first_nm)
+    num_bad_first_nms <- length(bad_first_nms)
+    cli::cli_abort(
+      "{num_bad_first_nms} optimization goal{?s} {?has/have} a first argument that
+      is named. {?It/They} should be unnamed.",
+      call = call
+    )
+  }
+  good_other_names <- purrr::map_lgl(nms, ~ all(.x[-1] != ""))
+  if (any(!good_other_names)) {
+    bad_other_nms <- which(!good_other_names)
+    num_bad_other_nms <- length(bad_other_nms)
+    cli::cli_abort(
+      "{num_bad_other_nms} optimization goal{?s} {?has/have} additional arguments that
+      are {.strong not} named. All but the first argument should be named.",
+      call = call
+    )
+  }
+
+  invisible(TRUE)
 }
 
 # ------------------------------------------------------------------------------
