@@ -34,6 +34,18 @@ desirability_set <- S7::new_class(
   )
 )
 
+S7::method(print, desirability_set) <- function(x) {
+    cli::cli_inform("Simultaneous Optimization via Desirability Functions")
+    cat("\n")
+    vals <- sort(unique(unlist(x@variables)))
+    cli::cli_inform(
+      "{length(x@inputs)} desirability function{?s} for {length(vals)} variable{?s}"
+    )
+    cli::cli_inform("Variables: {.val {vals}}.")
+
+    invisible(x)
+  }
+
 # ------------------------------------------------------------------------------
 
 #' High-level interface to specifying desirability functions
@@ -71,8 +83,6 @@ desirability_set <- S7::new_class(
 desirability <- function(..., .use_data = FALSE) {
   raw_inputs <- rlang::enexprs(...)
   check_fn_args(raw_inputs, all_f)
-
-  # check for un-named arguments
 
   new_fns <- translate_fn_args(raw_inputs, vals = all_f, subs = all_d, .use_data)
 
@@ -128,18 +138,6 @@ translate_fn_args <- function(x, vals, subs, .use_data) {
     y <- purrr::map(y, ~ rlang::call_modify(.x, use_data = TRUE))
   }
   y
-}
-
-print_method <- function(x, ...) {
-  cli::cli_inform("Simultaneous Optimization via Desirability Functions")
-  cat("\n")
-  vals <- sort(unique(unlist(x$variables)))
-  cli::cli_inform(
-    "{length(x$inputs)} desirability function{?s} for {length(vals)} variable{?s}"
-  )
-  cli::cli_inform("Variables: {.val {vals}}.")
-
-  invisible(x)
 }
 
 # ------------------------------------------------------------------------------
