@@ -116,6 +116,7 @@ translate_fn_args <- function(x, vals, subs) {
   fns <- purrr::map(x, ~ .x[[1]])
   ind <- index_fn(fns, vals = vals)
   y <- purrr::map2(x, ind, ~ sub_fn(.x, .y, vals = subs))
+  y <- purrr::map(y, ~ rlang::call_modify(.x, use_data = TRUE))
 }
 
 print_method <- function(x, ...) {
