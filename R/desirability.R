@@ -38,9 +38,12 @@ desirability_set <- S7::new_class(
 
 #' High-level interface to specifying desirability functions
 #'
-#' @param Arguments using a goal function (see below) and the variable to be
+#' @param ... using a goal function (see below) and the variable to be
 #' optimized. Other arguments should be specified as needed but **must be
 #' named**. Order of the arguments does not matter.
+#' @param .use_data A single logical to specify whether all translated
+#' desirability functions (such as [d_max()]) should enable `use_data = TRUE` to
+#' fill in any unspecified required arguments.
 #' @return An object of class `"desirability_set"` that can be used to make
 #' a set of desirability functions.
 #' @keywords internal
@@ -65,13 +68,13 @@ desirability_set <- S7::new_class(
 #'
 #' Where the `scale` argument makes the desirability curve more stringent.
 #' @export
-desirability <- function(...) {
+desirability <- function(..., .use_data = FALSE) {
   raw_inputs <- rlang::enexprs(...)
   check_fn_args(raw_inputs, all_f)
 
   # check for un-named arguments
 
-  new_fns <- translate_fn_args(raw_inputs, vals = all_f, subs = all_d)
+  new_fns <- translate_fn_args(raw_inputs, vals = all_f, subs = all_d, .use_data)
 
   variables <- purrr::map(raw_inputs, ~ all.vars(.x[[2]]))
 
@@ -112,14 +115,19 @@ sub_fn <- function(x, ind, vals) {
   x
 }
 
-translate_fn_args <- function(x, vals, subs) {
+translate_fn_args <- function(x, vals, subs, .use_data) {
   fns <- purrr::map(x, ~ .x[[1]])
   ind <- index_fn(fns, vals = vals)
+
   y <- purrr::map2(x, ind, ~ sub_fn(.x, .y, vals = subs))
-  # In case the user did not specify all of the required arguments, tell the
-  # functions to use the data to impute them. If they did set values for all
-  # of the required arguments, `use_data = TRUE` has no effect.
-  y <- purrr::map(y, ~ rlang::call_modify(.x, use_data = TRUE))
+
+  if (.use_data) {
+    # In case the user did not specify all of the required arguments, tell the
+    # functions to use the data to impute them. If they did set values for all
+    # of the required arguments, `use_data = TRUE` has no effect.
+    y <- purrr::map(y, ~ rlang::call_modify(.x, use_data = TRUE))
+  }
+  y
 }
 
 print_method <- function(x, ...) {

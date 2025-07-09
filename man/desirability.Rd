@@ -4,12 +4,16 @@
 \alias{desirability}
 \title{High-level interface to specifying desirability functions}
 \usage{
-desirability(...)
+desirability(..., .use_data = FALSE)
 }
 \arguments{
-\item{Arguments}{using a goal function (see below) and the variable to be
+\item{...}{using a goal function (see below) and the variable to be
 optimized. Other arguments should be specified as needed but \strong{must be
 named}. Order of the arguments does not matter.}
+
+\item{.use_data}{A single logical to specify whether all translated
+desirability functions (such as \code{\link[=d_max]{d_max()}}) should enable \code{use_data = TRUE} to
+fill in any unspecified required arguments.}
 }
 \value{
 An object of class \code{"desirability_set"} that can be used to make
