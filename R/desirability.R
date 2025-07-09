@@ -116,6 +116,9 @@ translate_fn_args <- function(x, vals, subs) {
   fns <- purrr::map(x, ~ .x[[1]])
   ind <- index_fn(fns, vals = vals)
   y <- purrr::map2(x, ind, ~ sub_fn(.x, .y, vals = subs))
+  # In case the user did not specify all of the required arguments, tell the
+  # functions to use the data to impute them. If they did set values for all
+  # of the required arguments, `use_data = TRUE` has no effect.
   y <- purrr::map(y, ~ rlang::call_modify(.x, use_data = TRUE))
 }
 
