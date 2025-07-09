@@ -82,6 +82,9 @@ S7::method(print, desirability_set) <- function(x) {
 #' @export
 desirability <- function(..., .use_data = FALSE) {
   raw_inputs <- rlang::enexprs(...)
+  if (length(raw_inputs) == 0) {
+    cli::cli_abort("At least one optimization goal (e.g., {.fn maximize}) should be declared.")
+  }
   check_first_arg(raw_inputs)
   check_fn_args(raw_inputs, all_f)
 
