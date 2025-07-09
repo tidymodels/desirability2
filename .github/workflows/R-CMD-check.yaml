@@ -33,8 +33,9 @@ jobs:
           - {os: ubuntu-latest,  r: 'release'}
           - {os: ubuntu-latest,  r: 'oldrel-1'}
           - {os: ubuntu-latest,  r: 'oldrel-2'}
-          - {os: ubuntu-latest,  r: 'oldrel-3'}
-          - {os: ubuntu-latest,  r: 'oldrel-4'}
+          # until these correspond to >= 4.3.0
+          # - {os: ubuntu-latest,  r: 'oldrel-3'}
+          # - {os: ubuntu-latest,  r: 'oldrel-4'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
