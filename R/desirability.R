@@ -82,7 +82,9 @@ S7::method(print, desirability_set) <- function(x) {
 #' @export
 desirability <- function(..., .use_data = FALSE) {
   raw_inputs <- rlang::enexprs(...)
+  check_first_arg(raw_inputs)
   check_fn_args(raw_inputs, all_f)
+
 
   new_fns <- translate_fn_args(raw_inputs, vals = all_f, subs = all_d, .use_data)
 
@@ -96,7 +98,7 @@ desirability <- function(..., .use_data = FALSE) {
 }
 
 # ------------------------------------------------------------------------------
-# Helper functions
+# Validation functions
 
 check_fn_args <- function(x, vals) {
   fns <- purrr::map_chr(x, ~ rlang::expr_deparse(.x[[1]])) # TODO don't need to deparse
@@ -111,6 +113,37 @@ check_fn_args <- function(x, vals) {
   }
   invisible(TRUE)
 }
+
+check_first_arg <- function(x) {
+  num_args <- purrr::map_int(x, length) - 1L
+  zero_args <- sum(num_args == 0)
+  if (any(zero_args)) {
+    cli::cli_abort(
+      "{sum(zero_args)} optimization term{?s} {?has/have} no arguments.
+       At least one is needed."
+    )
+  }
+  bad_first_name <- purrr::map_lgl(x, missing_first_name)
+  if (any(bad_first_name)) {
+    cli::cli_abort("The first argument to the optimization terms should be unnamed.")
+  }
+  invisible(TRUE)
+}
+
+missing_first_name <- function(x) {
+  if (is.null(x)) {
+    return(TRUE)
+  }
+  if (x[2] == "") {
+    res <- TRUE
+  } else {
+    res <- FALSE
+  }
+  res
+}
+
+# ------------------------------------------------------------------------------
+# Helper functions
 
 match_fn <- function(orig, vals) {
   which(purrr::map_lgl(vals, ~ identical(.x, orig)))
