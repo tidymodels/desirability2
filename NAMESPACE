@@ -8,6 +8,8 @@ export(d_min)
 export(d_overall)
 export(d_target)
 export(desirability)
+export(select_best_desirability)
+export(show_best_desirability)
 if (getRversion() < "4.3.0") importFrom("S7", "@")
 
 import(rlang)

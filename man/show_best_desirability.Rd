@@ -72,8 +72,29 @@ influence of that metric. The \code{categories()} does not have a scaling
 argument while \code{target()} has two (\code{scale_low} and \code{scale_high}) for ranges
 on either side of the \code{target}.
 
-If \code{low}, \code{high}, or \code{target} are not specified, the onbserved data are used
-to estimate their values.
+Here is an example the optimizes RMSE and the concordance correlation
+coefficient, with more emphasis on the former:
+
+\preformatted{
+  minimize(rmse, low = 0.10, high = 2.00, scale = 3.0),
+  maximize(ccc,  low = 0.00, high = 1.00) # scale defaults to 1.0
+}
+
+If \code{low}, \code{high}, or \code{target} are not specified, the observed data are used
+to estimate their values. For the previous example, if we were to use
+
+\preformatted{
+  minimize(rmse, low = 0.10, high = 2.00, scale = 3.0),
+  maximize(ccc)
+}
+
+and the concordance correlation coefficient statistics ranged from 0.21 to
+0.35, the actual goals would  end up as:
+
+\preformatted{
+  minimize(rmse, low = 0.10, high = 2.00, scale = 3.0),
+  maximize(ccc,  low = 0.21, high = 0.35)
+}
 
 More than one variable can be used in a term as long as R can parse and
 execute the expression. For example, you could define the Youden's J
