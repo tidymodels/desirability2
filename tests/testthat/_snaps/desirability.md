@@ -48,10 +48,9 @@
     Code
       d1
     Message
-      Simultaneous Optimization via Desirability Functions
-    Output
       
-    Message
+      -- Simultaneous Optimization via Desirability Functions ------------------------
+      
       3 desirability functions for 3 variables
       Variables: "a", "b", and "x".
 
@@ -105,10 +104,9 @@
     Code
       d2
     Message
-      Simultaneous Optimization via Desirability Functions
-    Output
       
-    Message
+      -- Simultaneous Optimization via Desirability Functions ------------------------
+      
       3 desirability functions for 3 variables
       Variables: "a", "b", and "x".
 
