@@ -7,4 +7,7 @@ export(d_max)
 export(d_min)
 export(d_overall)
 export(d_target)
+export(desirability)
+if (getRversion() < "4.3.0") importFrom("S7", "@")
+
 import(rlang)
