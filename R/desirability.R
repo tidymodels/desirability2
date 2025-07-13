@@ -35,13 +35,18 @@ desirability_set <- S7::new_class(
 )
 
 S7::method(print, desirability_set) <- function(x, ...) {
-    cli::cli_inform("Simultaneous Optimization via Desirability Functions")
-    cat("\n")
-    vals <- sort(unique(unlist(x@variables)))
-    cli::cli_inform(
-      "{length(x@inputs)} desirability function{?s} for {length(vals)} variable{?s}"
-    )
-    cli::cli_inform("Variables: {.val {vals}}.")
+  cli::cli_div()
+  cli::cli_h1("Simultaneous Optimization via Desirability Functions")
+
+  cli::cli_text()
+
+  vals <- sort(unique(unlist(x@variables)))
+  cli::cli_text(
+    "{length(x@inputs)} desirability function{?s} for {length(vals)} variable{?s}"
+  )
+  cli::cli_text("Variables: {.val {vals}}.")
+
+  cli::cli_end()
 
     invisible(x)
   }
@@ -137,7 +142,7 @@ get_num_nms <- function(x) {
 }
 
 check_arg_names <- function(x, call = rlang::env_parent()) {
-  num_args <- purrr::map_int(x, length) - 1L
+  num_args <- lengths(x) - 1L
 
   if (any(num_args == 0)) {
     cli::cli_abort(
@@ -210,7 +215,7 @@ translate_fn_args <- function(x, vals, subs, .use_data) {
 # or to add `use_data = TRUE` to fil in the blanks with the data.
 
 get_missing_args <- function(x) {
-  fns <- purrr::map(x, ~ .x[[1]])
+  fns <- purrr::map(x, 1)
   inds <- index_fn(fns, vals = all_d)
   args_req <- purrr::map(inds, ~ req_args[[.x]])
   args_given <- purrr::map(x, ~ get_named_args(.x))
