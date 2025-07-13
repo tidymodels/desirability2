@@ -132,15 +132,6 @@ get_nms <- function(x) {
   res[-1]
 }
 
-get_num_nms <- function(x) {
-  if (is.null(x)) {
-    res <- 0
-  } else {
-    res <- length(x)
-  }
-  res
-}
-
 check_arg_names <- function(x, call = rlang::env_parent()) {
   num_args <- lengths(x) - 1L
 
@@ -153,7 +144,7 @@ check_arg_names <- function(x, call = rlang::env_parent()) {
   }
 
   nms <- purrr::map(x, get_nms)
-  num_nms <- purrr::map_int(nms, get_num_nms)
+  num_nms <- purrr::map_int(nms, length)
   good_first_nm <- purrr::map_lgl(nms, ~ .x[1] == "")
 
   if (any(!good_first_nm)) {
