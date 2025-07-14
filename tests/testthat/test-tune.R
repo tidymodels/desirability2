@@ -1,5 +1,7 @@
 test_that("best results", {
   skip_if_not_installed("tune")
+  skip_if_not_installed("scales")
+  skip_if_not_installed("yardstick")
 
   # fmt: skip
   des_1 <-
@@ -85,6 +87,8 @@ test_that("best results", {
 
 test_that("best results - missing data", {
   skip_if_not_installed("tune")
+  skip_if_not_installed("scales")
+  skip_if_not_installed("yardstick")
 
   na_data <- tune::ames_iter_search
   for (i in 1:nrow(na_data)) {
@@ -127,6 +131,8 @@ test_that("best results - missing data", {
 
 test_that("bad arguments", {
   skip_if_not_installed("tune")
+  skip_if_not_installed("scales")
+  skip_if_not_installed("yardstick")
 
   expect_snapshot(
     show_best_desirability(
