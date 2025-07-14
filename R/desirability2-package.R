@@ -18,3 +18,5 @@
 #' @import rlang
 ## usethis namespace: end
 NULL
+
+utils::globalVariables(".d_overall")

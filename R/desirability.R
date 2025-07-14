@@ -186,6 +186,14 @@ sub_fn <- function(x, ind, vals) {
   x
 }
 
+maybe_use_data <- function(x) {
+  fn <- x[[1]]
+  if (!identical(fn, rlang::sym("d_category"))) {
+    x <- rlang::call_modify(x, use_data = TRUE)
+  }
+  x
+}
+
 translate_fn_args <- function(x, vals, subs, .use_data) {
   fns <- purrr::map(x, ~ .x[[1]])
   ind <- index_fn(fns, vals = vals)
@@ -196,7 +204,7 @@ translate_fn_args <- function(x, vals, subs, .use_data) {
     # In case the user did not specify all of the required arguments, tell the
     # functions to use the data to impute them. If they did set values for all
     # of the required arguments, `use_data = TRUE` has no effect.
-    y <- purrr::map(y, ~ rlang::call_modify(.x, use_data = TRUE))
+    y <- purrr::map(y, maybe_use_data)
   }
   y
 }

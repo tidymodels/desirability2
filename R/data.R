@@ -20,4 +20,3 @@
 #'
 #' data(classification_results)
 NULL
-

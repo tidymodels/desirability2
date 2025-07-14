@@ -78,7 +78,7 @@
       d_target(a, low = 1, target = 2, high = 3, scale_low = 2, use_data = TRUE)
       
       [[2]]
-      d_category(b, categories = list(a = 0.1, b = 0.2, c = 0.3), use_data = TRUE)
+      d_category(b, categories = list(a = 0.1, b = 0.2, c = 0.3))
       
       [[3]]
       d_box(x, low = 1, high = 2, use_data = TRUE)
