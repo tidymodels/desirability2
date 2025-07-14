@@ -8,6 +8,8 @@
 * Two new functions to support the tune package were added. 
   `select_best_desirability()` and `show_best_desirability()` can be used for 
   multiparameter optimization of tuning parameters.  
+  
+* An example object, `imbalance_example`, is now included. 
 
 # desirability2 0.0.1
 
