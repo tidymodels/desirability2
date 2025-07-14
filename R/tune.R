@@ -49,8 +49,8 @@
 #' argument while `target()` has two (`scale_low` and `scale_high`) for ranges
 #' on either side of the `target`.
 #'
-#' Here is an example the optimizes RMSE and the concordance correlation
-#' coefficient, with more emphasis on the former:
+#' Here is an example that optimizes RMSE and the concordance correlation
+#' coefficient (a.k.a. "ccc"), with more emphasis on the former:
 #'
 #' \preformatted{
 #'   minimize(rmse, low = 0.10, high = 2.00, scale = 3.0),
@@ -83,25 +83,36 @@
 #'
 #' (although there is a function for this metric in the \pkg{yardstick} package).
 #'
+#' If the columns of the data set have missing values, their corresponding
+#' desirability will be missing. The overall desirability computation excludes
+#' missing values.
+#'
 #' We advise not referencing global values or inline functions inside of these
 #' verbs.
 #'
 #' Also note that there may be more than `n` values returned when showing the
 #' results; there may be more than one model configuration that has identical
 #' overall desirability.
+#'
+#' @seealso [d_max()], [d_overall()]
+#' @references Derringer, G. and Suich, R. (1980), Simultaneous Optimization of
+#' Several Response Variables. _Journal of Quality Technology_, 12, 214-219.
+#'
+#' Bartz-Beielstein, T. (2025). Multi-Objective Optimization and Hyperparameter
+#' Tuning With Desirability Functions. arXiv preprint arXiv:2503.23595.
+#'
 #' @examples
 #' # use pre-tuned results to demonstrate:
 #' if (rlang::is_installed("tune")) {
-#'   library(tune)
 #'
 #'   show_best_desirability(
-#'     ames_iter_search,
+#'     tune::ames_iter_search,
 #'     maximize(rsq),
 #'     minimize(rmse, scale = 3)
 #'   )
 #'
 #'   select_best_desirability(
-#'     ames_iter_search,
+#'     tune::ames_iter_search,
 #'     maximize(rsq),
 #'     minimize(rmse, scale = 3)
 #'   )
@@ -111,21 +122,22 @@
 show_best_desirability <- function(x, ..., n = 5, eval_time = NULL) {
   rlang::check_installed("tune")
   mtr_set <- tune::.get_tune_metrics(x)
-  mtr_names <- names(rlang::env_get(environment(mtr_set), "fns"))
 
   mtr <- tune::collect_metrics(x, type = "wide")
+  all_vars <- names(mtr)
+  all_vars <- all_vars[all_vars != ".config"]
   # TODO filter on eval_time
 
   res <- desirability(..., .use_data = TRUE)
 
   # Check for correct metric names
   d_vars <- sort(unique(unlist(res@variables)))
-  extra_vars <- setdiff(d_vars, mtr_names)
+  extra_vars <- setdiff(d_vars, all_vars)
   num_extras <- length(extra_vars)
   if (num_extras > 0) {
     cli::cli_abort(
-      "The desirability specification includes {num_extras} performance
-            metric{?s} that {?was/were} not collected: {.val {extra_vars}}."
+      "The desirability specification includes {num_extras} variable{?s} that
+      {?was/were} not collected: {.val {extra_vars}}."
     )
   }
 

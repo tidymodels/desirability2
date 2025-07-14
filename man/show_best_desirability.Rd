@@ -72,8 +72,8 @@ influence of that metric. The \code{categories()} does not have a scaling
 argument while \code{target()} has two (\code{scale_low} and \code{scale_high}) for ranges
 on either side of the \code{target}.
 
-Here is an example the optimizes RMSE and the concordance correlation
-coefficient, with more emphasis on the former:
+Here is an example that optimizes RMSE and the concordance correlation
+coefficient (a.k.a. "ccc"), with more emphasis on the former:
 
 \preformatted{
   minimize(rmse, low = 0.10, high = 2.00, scale = 3.0),
@@ -106,6 +106,10 @@ statistic using
 
 (although there is a function for this metric in the \pkg{yardstick} package).
 
+If the columns of the data set have missing values, their corresponding
+desirability will be missing. The overall desirability computation excludes
+missing values.
+
 We advise not referencing global values or inline functions inside of these
 verbs.
 
@@ -116,19 +120,28 @@ overall desirability.
 \examples{
 # use pre-tuned results to demonstrate:
 if (rlang::is_installed("tune")) {
-  library(tune)
 
   show_best_desirability(
-    ames_iter_search,
+    tune::ames_iter_search,
     maximize(rsq),
     minimize(rmse, scale = 3)
   )
 
   select_best_desirability(
-    ames_iter_search,
+    tune::ames_iter_search,
     maximize(rsq),
     minimize(rmse, scale = 3)
   )
 }
 
+}
+\references{
+Derringer, G. and Suich, R. (1980), Simultaneous Optimization of
+Several Response Variables. \emph{Journal of Quality Technology}, 12, 214-219.
+
+Bartz-Beielstein, T. (2025). Multi-Objective Optimization and Hyperparameter
+Tuning With Desirability Functions. arXiv preprint arXiv:2503.23595.
+}
+\seealso{
+\code{\link[=d_max]{d_max()}}, \code{\link[=d_overall]{d_overall()}}
 }
