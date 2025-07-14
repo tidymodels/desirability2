@@ -1,3 +1,20 @@
+#' Imbalanced classification results
+#'
+#' This is an object produced by [tune::tune_grid()] for a classification data
+#' set with a moderate class imbalance (18%) in the first class. The data were
+#' simulated. The code to produce the data and analysis is in the source
+#' package’s `inst` directory.
+#'
+#' The model was a single-layer neural network with six tuning parameters
+#' chosen for optimization. One parameter, `class_weights,` controls how much
+#' influence the minority class has on the objective function during training.
+#' This can help trade off the true positive and true negative rates to our
+#' needs.
+#'
+#' The goal would be to have good calibration (as measured by `brier_class`)
+#' and improved `sensitivity`, but not without a significant loss of
+#' `specificity`.
+
 library(tidymodels)
 library(desirability2)
 library(future)
