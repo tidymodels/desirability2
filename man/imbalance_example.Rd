@@ -24,10 +24,4 @@ The goal would be to have good calibration (as measured by \code{brier_class})
 and improved \code{sensitivity}, but not without a significant loss of
 \code{specificity}.
 }
-\examples{
-if (rlang::is_installed("tune")) {
-  imbalance_example
-}
-
-}
 \keyword{datasets}

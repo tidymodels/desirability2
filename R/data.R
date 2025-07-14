@@ -43,10 +43,4 @@ NULL
 #' @docType data
 #' @return \item{imbalance_example}{an object with class `tune_results`}
 #' @keywords datasets
-
-#' @examples
-#' if (rlang::is_installed("tune")) {
-#'   imbalance_example
-#' }
-#'
 NULL
