@@ -62,9 +62,9 @@ maybe_name <- function(x) {
   # The selector can return vectors (unnamed) and data frames.
   # Binding unnamed things generates a warning so add names here when needed.
   is_tbl <- purrr::map_lgl(x, is.data.frame)
-   if (all(is_tbl)) {
-     return(x)
-   }
+  if (all(is_tbl)) {
+    return(x)
+  }
   if (any(!is_tbl)) {
     if (any(is_tbl)) {
       df_x <- x[is_tbl]
@@ -84,4 +84,3 @@ geomean <- function(x, na.rm = TRUE) {
   }
   exp(sum(log(x), na.rm = na.rm) / sum(!is.na(x)))
 }
-

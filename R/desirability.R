@@ -20,9 +20,11 @@ names(req_args) <- all_d
 # S7 scaffolding
 
 new_desirability_set <- function(inputs, translated, variables) {
-  desirability_set(inputs = inputs,
-                   translated = translated,
-                   variables = variables)
+  desirability_set(
+    inputs = inputs,
+    translated = translated,
+    variables = variables
+  )
 }
 
 desirability_set <- S7::new_class(
@@ -48,8 +50,8 @@ S7::method(print, desirability_set) <- function(x, ...) {
 
   cli::cli_end()
 
-    invisible(x)
-  }
+  invisible(x)
+}
 
 # ------------------------------------------------------------------------------
 
@@ -88,13 +90,19 @@ S7::method(print, desirability_set) <- function(x, ...) {
 desirability <- function(..., .use_data = FALSE) {
   raw_inputs <- rlang::enexprs(...)
   if (length(raw_inputs) == 0) {
-    cli::cli_abort("At least one optimization goal (e.g., {.fn maximize}) should be declared.")
+    cli::cli_abort(
+      "At least one optimization goal (e.g., {.fn maximize}) should be declared."
+    )
   }
   check_arg_names(raw_inputs)
   check_fn_args(raw_inputs, all_f)
 
-
-  new_fns <- translate_fn_args(raw_inputs, vals = all_f, subs = all_d, .use_data)
+  new_fns <- translate_fn_args(
+    raw_inputs,
+    vals = all_f,
+    subs = all_d,
+    .use_data
+  )
 
   variables <- purrr::map(raw_inputs, ~ all.vars(.x[[2]]))
 
@@ -229,4 +237,3 @@ get_named_args <- function(x) {
   }
   nms[nms != ""]
 }
-
