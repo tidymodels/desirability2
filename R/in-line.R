@@ -188,8 +188,15 @@
 #'   lims(x = 0:1, y = 0:1) +
 #'   coord_fixed() +
 #'   ylab("Desirability")
-d_max <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE) {
-  low  <- check_args(low,  x, use_data, fn = "d_max")
+d_max <- function(
+  x,
+  low,
+  high,
+  scale = 1,
+  missing = NA_real_,
+  use_data = FALSE
+) {
+  low <- check_args(low, x, use_data, fn = "d_max")
   high <- check_args(high, x, use_data, fn = "d_max", type = "high")
   check_scale(scale, arg = "scale")
 
@@ -198,8 +205,15 @@ d_max <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE)
 
 #' @rdname inline_desirability
 #' @export
-d_min <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE) {
-  low  <- check_args(low,  x, use_data, fn = "d_min")
+d_min <- function(
+  x,
+  low,
+  high,
+  scale = 1,
+  missing = NA_real_,
+  use_data = FALSE
+) {
+  low <- check_args(low, x, use_data, fn = "d_min")
   high <- check_args(high, x, use_data, fn = "d_min", type = "high")
   check_scale(scale, arg = "scale")
 
@@ -209,10 +223,18 @@ d_min <- function(x, low, high, scale = 1, missing = NA_real_, use_data = FALSE)
 
 #' @rdname inline_desirability
 #' @export
-d_target <- function(x, low, target, high, scale_low = 1, scale_high = 1,
-                     missing = NA_real_, use_data = FALSE) {
-  low    <- check_args(low,    x, use_data, fn = "d_target")
-  high   <- check_args(high,   x, use_data, fn = "d_target", type = "high")
+d_target <- function(
+  x,
+  low,
+  target,
+  high,
+  scale_low = 1,
+  scale_high = 1,
+  missing = NA_real_,
+  use_data = FALSE
+) {
+  low <- check_args(low, x, use_data, fn = "d_target")
+  high <- check_args(high, x, use_data, fn = "d_target", type = "high")
   target <- check_args(target, x, use_data, fn = "d_target", type = "target")
   check_scale(scale_low, arg = "scale_low")
   check_scale(scale_high, arg = "scale_high")
@@ -224,7 +246,7 @@ d_target <- function(x, low, target, high, scale_low = 1, scale_high = 1,
 #' @rdname inline_desirability
 #' @export
 d_box <- function(x, low, high, missing = NA_real_, use_data = FALSE) {
-  low  <- check_args(low,  x, use_data, fn = "d_box")
+  low <- check_args(low, x, use_data, fn = "d_box")
   high <- check_args(high, x, use_data, fn = "d_box", type = "high")
   .comp_box(x, low, high, missing)
 }

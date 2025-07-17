@@ -146,7 +146,9 @@ show_best_desirability <- function(x, ..., n = 5, eval_time = NULL) {
   for (i in seq_along(res@translated)) {
     tmp <- try(rlang::eval_tidy(res@translated[[i]], mtr), silent = TRUE)
     if (inherits(tmp, "try-error")) {
-      cli::cli_abort("An error occured when computing a desirability score: {tmp}.")
+      cli::cli_abort(
+        "An error occured when computing a desirability score: {tmp}."
+      )
     }
     mtr[[d_nms[i]]] <- tmp
   }
