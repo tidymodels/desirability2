@@ -105,6 +105,120 @@ classification_results |>
 See `?inline_desirability` for details on the individual desirability
 functions.
 
+## Using with the tune package
+
+We’ve also developed analogs to
+[`select_best()`](https://tune.tidymodels.org/reference/select_best.html)
+and
+[`show_best()`](https://tune.tidymodels.org/reference/show_best.html)
+that can be used to jointly optimize multiple metrics directly from an
+object produced by the tune and finetune packages. We can load the
+results for `tune::tune_grid()` for a pre-made binary file:
+
+``` r
+library(tune)
+library(ggplot2)
+
+# Load the results from a cost-sensitive neural network:
+load(system.file("example-data", "imbalance_example.rda", package = "desirability2"))
+
+tuning_params <- .get_tune_parameter_names(imbalance_example)
+tuning_params
+#> [1] "hidden_units"  "penalty"       "activation"    "learn_rate"   
+#> [5] "stop_iter"     "class_weights"
+
+metrics <- .get_tune_metric_names(imbalance_example)
+metrics
+#> [1] "kap"         "brier_class" "roc_auc"     "pr_auc"      "sensitivity"
+#> [6] "specificity" "mn_log_loss" "mcc"
+```
+
+To demonstrate, we’ve fitted a neural network with several tuning
+parameters, including one for `class_weights`. This parameter makes the
+model *cost-sensitive*; if a weight of 2.0 is used, the minority class
+in the training set has a 2-fold greater impact on the estimation
+process.
+
+For this example data set, increasing the class weight decreases
+specificity and increases sensitivity (at different rates). However, if
+we optimize on sensitivity, we are likely to get the worst specificity
+value.
+
+``` r
+nn_mtr <- collect_metrics(imbalance_example, type = "wide")
+nn_mtr |> 
+  ggplot(aes(1 - specificity, sensitivity, col = class_weights)) + 
+  geom_point() + 
+  coord_obs_pred() +
+  theme_bw() +
+  theme(legend.position = "top")
+```
+
+<img src="man/figures/README-choices-1.png" width="100%" />
+
+``` r
+
+select_best(imbalance_example, metric = "sensitivity")
+#> # A tibble: 1 × 7
+#>   hidden_units penalty activation learn_rate stop_iter class_weights .config    
+#>          <int>   <dbl> <chr>           <dbl>     <dbl>         <dbl> <chr>      
+#> 1            5   0.391 tanh          0.00118      5.59          8.76 Preprocess…
+
+select_best(imbalance_example, metric = "specificity")
+#> # A tibble: 1 × 7
+#>   hidden_units penalty activation learn_rate stop_iter class_weights .config    
+#>          <int>   <dbl> <chr>           <dbl>     <dbl>         <dbl> <chr>      
+#> 1           24 0.00910 relu           0.0164      1.92             1 Preprocess…
+
+select_best(imbalance_example, metric = "brier_class")
+#> # A tibble: 1 × 7
+#>   hidden_units penalty activation learn_rate stop_iter class_weights .config    
+#>          <int>   <dbl> <chr>           <dbl>     <dbl>         <dbl> <chr>      
+#> 1           24 0.00910 relu           0.0164      1.92             1 Preprocess…
+```
+
+Also, we want to make sure our model is well calibrated so we also want
+to minimize the Brier score.
+
+To do this, we can use different verbs: `maximize()`, `minimize()`,
+`target()`, or `constrain()` for any of the metrics *or* tuning
+parameters. For example:
+
+``` r
+top_five <- 
+  imbalance_example |> 
+  show_best_desirability(
+    # Put a little extra importance on the Brier scpre
+    minimize(brier_class, scale = 2),
+    maximize(sensitivity),
+    constrain(specificity, low = 0.75, high = 1)
+  )
+
+# The resulting desirability functions and their overall mean
+top_five |> 
+  select(starts_with(".d_"))
+#> # A tibble: 5 × 4
+#>   .d_min_brier_class .d_max_sensitivity .d_box_specificity .d_overall
+#>                <dbl>              <dbl>              <dbl>      <dbl>
+#> 1              0.842              0.918                  1      0.918
+#> 2              0.770              0.951                  1      0.901
+#> 3              0.808              0.891                  1      0.896
+#> 4              0.763              0.924                  1      0.890
+#> 5              0.806              0.866                  1      0.887
+
+# The metric values (for most desirable to the fifth least desirable):
+top_five |> 
+  select(all_of(metrics))
+#> # A tibble: 5 × 8
+#>     kap brier_class roc_auc pr_auc sensitivity specificity mn_log_loss   mcc
+#>   <dbl>       <dbl>   <dbl>  <dbl>       <dbl>       <dbl>       <dbl> <dbl>
+#> 1 0.703      0.0846   0.975  0.909       0.968       0.880       0.271 0.732
+#> 2 0.643      0.102    0.968  0.877       0.981       0.844       0.323 0.684
+#> 3 0.665      0.0925   0.972  0.901       0.957       0.863       0.298 0.699
+#> 4 0.631      0.103    0.971  0.898       0.970       0.842       0.325 0.673
+#> 5 0.642      0.0929   0.968  0.872       0.947       0.854       0.291 0.677
+```
+
 ## Code of Conduct
 
 Please note that the desirability2 project is released with a
