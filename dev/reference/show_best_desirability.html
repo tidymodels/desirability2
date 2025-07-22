@@ -89,18 +89,18 @@ function to map values of a metric to a <code>[0, 1]</code> range where 1.0 is m
 desirable and zero is unacceptable. After constructing these for the metric
 of interest, the overall desirability is computed using the geometric mean
 of the individual desirabilities.</p>
-<p>The verbs that can be used in <code>...</code> (and their arguments) are:</p><ul><li><p><code>maximize()</code> when larger values are better, such as the area under the ROC
+<p>The verbs that can be used in <code>...</code> (and their arguments) are:</p><ul><li><p><code><a href="aliases.html">maximize()</a></code> when larger values are better, such as the area under the ROC
 score.</p></li>
-<li><p><code>minimize()</code> for metrics such as RMSE or the Brier score.</p></li>
-<li><p><code>target()</code> for cases when a specific value of the metric is important.</p></li>
-<li><p><code>constrain()</code> is used when there is a range of values that are equally
+<li><p><code><a href="aliases.html">minimize()</a></code> for metrics such as RMSE or the Brier score.</p></li>
+<li><p><code><a href="aliases.html">target()</a></code> for cases when a specific value of the metric is important.</p></li>
+<li><p><code><a href="aliases.html">constrain()</a></code> is used when there is a range of values that are equally
 desirable.</p></li>
 <li><p><code>categories()</code> is for situations where we want to set desirability for
 qualitative columns.</p></li>
 </ul><p>Except for <code>categories()</code>, these functions have arguments <code>low</code> and <code>high</code> to
 set the ranges of the metrics. For example, using:</p>
 <div class="sourceCode"><pre><code><span></span>
-<span>  <span class="fu">minimize</span><span class="op">(</span><span class="va">rmse</span>, low <span class="op">=</span> <span class="fl">0.1</span>, high <span class="op">=</span> <span class="fl">2.0</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/aliases.html">minimize</a></span><span class="op">(</span><span class="va">rmse</span>, low <span class="op">=</span> <span class="fl">0.1</span>, high <span class="op">=</span> <span class="fl">2.0</span><span class="op">)</span></span></code></pre></div>
 
 <p>means that values above 2.0 are unacceptable and that an RMSE of 0.1 is the
 best possible outcome.</p>
@@ -110,7 +110,7 @@ linearly changes between <code>low</code> and <code>high</code>. Using a <code>s
 than 1 will make it more difficult to satisfy the criterion when suboptimal
 values are evaluated. Conversely, a value less than one will diminish the
 influence of that metric. The <code>categories()</code> does not have a scaling
-argument while <code>target()</code> has two (<code>scale_low</code> and <code>scale_high</code>) for ranges
+argument while <code><a href="aliases.html">target()</a></code> has two (<code>scale_low</code> and <code>scale_high</code>) for ranges
 on either side of the <code>target</code>.</p>
 <p>Here is an example that optimizes RMSE and the concordance correlation
 coefficient (a.k.a. "ccc"), with more emphasis on the former:</p>
@@ -137,7 +137,7 @@ to estimate their values. For the previous example, if we were to use</p>
 execute the expression. For example, you could define the Youden's J
 statistic using</p>
 <div class="sourceCode"><pre><code><span></span>
-<span>  <span class="fu">maximize</span><span class="op">(</span><span class="va">sensitivity</span> <span class="op">+</span> <span class="va">specificity</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/aliases.html">maximize</a></span><span class="op">(</span><span class="va">sensitivity</span> <span class="op">+</span> <span class="va">specificity</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 
 <p>(although there is a function for this metric in the <span class="pkg">yardstick</span> package).</p>
 <p>If the columns of the data set have missing values, their corresponding
@@ -168,14 +168,14 @@ Tuning With Desirability Functions. arXiv preprint arXiv:2503.23595.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="fu">show_best_desirability</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="fu">tune</span><span class="fu">::</span><span class="va"><a href="https://tune.tidymodels.org/reference/example_ames_knn.html" class="external-link">ames_iter_search</a></span>,</span></span>
-<span class="r-in"><span>    <span class="fu">maximize</span><span class="op">(</span><span class="va">rsq</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    <span class="fu">minimize</span><span class="op">(</span><span class="va">rmse</span>, scale <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="aliases.html">maximize</a></span><span class="op">(</span><span class="va">rsq</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="aliases.html">minimize</a></span><span class="op">(</span><span class="va">rmse</span>, scale <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="fu">select_best_desirability</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="fu">tune</span><span class="fu">::</span><span class="va"><a href="https://tune.tidymodels.org/reference/example_ames_knn.html" class="external-link">ames_iter_search</a></span>,</span></span>
-<span class="r-in"><span>    <span class="fu">maximize</span><span class="op">(</span><span class="va">rsq</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    <span class="fu">minimize</span><span class="op">(</span><span class="va">rmse</span>, scale <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="aliases.html">maximize</a></span><span class="op">(</span><span class="va">rsq</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="aliases.html">minimize</a></span><span class="op">(</span><span class="va">rmse</span>, scale <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 6</span></span>

@@ -66,17 +66,17 @@ a set of desirability functions.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The following set of nonexistent functions are used to specify an
-optimization goal:</p><ul><li><p><code>maximize()</code> (corresponding to  <code><a href="inline_desirability.html">d_max()</a></code>)</p></li>
-<li><p><code>minimize()</code>  (<code><a href="inline_desirability.html">d_min()</a></code>)</p></li>
-<li><p><code>target()</code> (<code><a href="inline_desirability.html">d_target()</a></code>)</p></li>
-<li><p><code>constrain()</code> (<code><a href="inline_desirability.html">d_box()</a></code>)</p></li>
+optimization goal:</p><ul><li><p><code><a href="aliases.html">maximize()</a></code> (corresponding to  <code><a href="inline_desirability.html">d_max()</a></code>)</p></li>
+<li><p><code><a href="aliases.html">minimize()</a></code>  (<code><a href="inline_desirability.html">d_min()</a></code>)</p></li>
+<li><p><code><a href="aliases.html">target()</a></code> (<code><a href="inline_desirability.html">d_target()</a></code>)</p></li>
+<li><p><code><a href="aliases.html">constrain()</a></code> (<code><a href="inline_desirability.html">d_box()</a></code>)</p></li>
 <li><p><code>categories()</code> (<code><a href="inline_desirability.html">d_max()</a></code>)</p></li>
 </ul><p>For example, if you wanted to jointly maximize a regression model’s Rsquared
 while minimizing the RMSE, you could use</p>
 <div class="sourceCode"><pre><code><span></span>
 <span>  <span class="fu"><a href="../reference/desirability.html">desirability</a></span><span class="op">(</span></span>
-<span>    <span class="fu">minimize</span><span class="op">(</span><span class="va">rmse</span>, scale <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>    <span class="fu">maximize</span><span class="op">(</span><span class="va">rsq</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/aliases.html">minimize</a></span><span class="op">(</span><span class="va">rmse</span>, scale <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/aliases.html">maximize</a></span><span class="op">(</span><span class="va">rsq</span><span class="op">)</span></span>
 <span> <span class="op">)</span></span></code></pre></div>
 
 <p>Where the <code>scale</code> argument makes the desirability curve more stringent.</p>
