@@ -1,4 +1,4 @@
-# desirability2 (development version)
+# desirability2 0.1.0
 
 * Transition from the magrittr pipe to the base R pipe.
 
