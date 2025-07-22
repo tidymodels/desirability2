@@ -34,6 +34,8 @@ Suppose a classification model with two tuning parameters (`penalty` and `mixtur
 ```{r, start, include = FALSE}
 library(desirability2)
 library(dplyr)
+library(tune)
+library(ggplot2)
 ```
 
 ```{r}
@@ -70,6 +72,69 @@ classification_results |>
 
 See `?inline_desirability` for details on the individual desirability functions. 
 
+## Using with the tune package
+
+We've also developed analogs to [`select_best()`](https://tune.tidymodels.org/reference/select_best.html) and [`show_best()`](https://tune.tidymodels.org/reference/show_best.html) that can be used to jointly optimize multiple metrics directly from an object produced by the tune and finetune packages. We can load the results for `tune::tune_grid()` for a pre-made binary file: 
+
+```{r}
+#| label: imbalance-example
+library(tune)
+library(ggplot2)
+
+# Load the results from a cost-sensitive neural network:
+load(system.file("example-data", "imbalance_example.rda", package = "desirability2"))
+
+tuning_params <- .get_tune_parameter_names(imbalance_example)
+tuning_params
+
+metrics <- .get_tune_metric_names(imbalance_example)
+metrics
+```
+
+To demonstrate, we've fitted a neural network with several tuning parameters, including one for `class_weights`. This parameter makes the model _cost-sensitive_; if a weight of 2.0 is used, the minority class in the training set has a 2-fold greater impact on the estimation process.
+
+For this example data set, increasing the class weight decreases specificity and increases sensitivity (at different rates). However, if we optimize on sensitivity, we are likely to get the worst specificity value. 
+
+```{r}
+#| label: choices
+nn_mtr <- collect_metrics(imbalance_example, type = "wide")
+nn_mtr |> 
+  ggplot(aes(1 - specificity, sensitivity, col = class_weights)) + 
+  geom_point() + 
+  coord_obs_pred() +
+  theme_bw() +
+  theme(legend.position = "top")
+
+select_best(imbalance_example, metric = "sensitivity")
+
+select_best(imbalance_example, metric = "specificity")
+
+select_best(imbalance_example, metric = "brier_class")
+```
+
+Also, we want to make sure our model is well calibrated so we also want to minimize the Brier score.
+
+To do this, we can use different verbs: `maximize()`, `minimize()`, `target()`, or `constrain()` for any of the metrics _or_ tuning parameters. For example: 
+
+```{r}
+#| label: multi-select
+top_five <- 
+  imbalance_example |> 
+  show_best_desirability(
+    # Put a little extra importance on the Brier scpre
+    minimize(brier_class, scale = 2),
+    maximize(sensitivity),
+    constrain(specificity, low = 0.75, high = 1)
+  )
+
+# The resulting desirability functions and their overall mean
+top_five |> 
+  select(starts_with(".d_"))
+
+# The metric values (for most desirable to the fifth least desirable):
+top_five |> 
+  select(all_of(metrics))
+```
 
 ## Code of Conduct
   
