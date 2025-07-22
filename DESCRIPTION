@@ -36,3 +36,15 @@ Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Collate: 
+    'checks.R'
+    'computations.R'
+    'data.R'
+    'in-line.R'
+    'desirability.R'
+    'desirability2-package.R'
+    'import-standalone-obj-type.R'
+    'import-standalone-types-check.R'
+    'overall.R'
+    'tune.R'
+    'zzz.R'
