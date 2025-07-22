@@ -237,3 +237,30 @@ get_named_args <- function(x) {
   }
   nms[nms != ""]
 }
+
+# ------------------------------------------------------------------------------
+# Make aliases of d_* functions to enable auto-complete
+
+#' Aliases for individual desirability functions
+#' @inheritParams inline_desirability
+#' @include in-line.R
+#' @keywords internal
+#' @rdname aliases
+#' @export
+maximize <- d_max
+
+#' @name aliases
+#' @export
+minimize <- d_min
+
+#' @name aliases
+#' @export
+target <- d_target
+
+#' @name aliases
+#' @export
+constrain <- d_box
+
+#' @name aliases
+#' @export
+category <- d_category
