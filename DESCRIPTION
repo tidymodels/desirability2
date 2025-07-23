@@ -8,11 +8,12 @@ Authors@R: c(
   )
 Description: In-line functions for multivariate optimization via
     desirability functions (Derringer and Suich, 1980,
-    <doi:10.1080/00224065.1980.11980968>) with easy use within `dplyr`
+    <doi:10.1080/00224065.1980.11980968>) with easy use within 'dplyr'
     pipelines.
 License: MIT + file LICENSE
 URL: https://desirability2.tidymodels.org,
     https://github.com/tidymodels/desirability2
+BugReports: https://github.com/tidymodels/desirability2/issues
 Depends: 
     R (>= 4.1.0)
 Imports: 
@@ -48,4 +49,3 @@ Collate:
     'overall.R'
     'tune.R'
     'zzz.R'
-BugReports: https://github.com/tidymodels/desirability2/issues
