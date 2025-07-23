@@ -22,6 +22,7 @@ Useful links:
 \itemize{
   \item \url{https://desirability2.tidymodels.org}
   \item \url{https://github.com/tidymodels/desirability2}
+  \item Report bugs at \url{https://github.com/tidymodels/desirability2/issues}
 }
 
 }
