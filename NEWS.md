@@ -1,5 +1,8 @@
 # desirability2 (development version)
 
+* Export a helper function (`make_desirability_cols()`) to make it easier for 
+  other packages to import and use desirability2. 
+
 # desirability2 0.1.0
 
 * Transition from the magrittr pipe to the base R pipe.
