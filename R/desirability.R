@@ -87,7 +87,7 @@ S7::method(print, desirability_set) <- function(x, ...) {
 #'
 #' Where the `scale` argument makes the desirability curve more stringent.
 #' @export
-desirability <- function(..., .use_data = FALSE) {
+desirability <- function(..., .use_data = TRUE) {
   raw_inputs <- rlang::enexprs(...)
   if (length(raw_inputs) == 0) {
     cli::cli_abort(
