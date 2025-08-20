@@ -141,23 +141,8 @@ show_best_desirability <- function(x, ..., n = 5, eval_time = NULL) {
     )
   }
 
-  # Make individual scores:
-  d_nms <- make_col_names(res)
-  for (i in seq_along(res@translated)) {
-    tmp <- try(rlang::eval_tidy(res@translated[[i]], mtr), silent = TRUE)
-    if (inherits(tmp, "try-error")) {
-      cli::cli_abort(
-        "An error occured when computing a desirability score: {tmp}."
-      )
-    }
-    mtr[[d_nms[i]]] <- tmp
-  }
-
   mtr <-
-    mtr |>
-    dplyr::mutate(
-      .d_overall = d_overall(dplyr::across(dplyr::starts_with(".d_")))
-    ) |>
+    make_desirability_cols(res, mtr) |>
     dplyr::slice_max(.d_overall, n = n, with_ties = TRUE)
   mtr
 }
@@ -181,4 +166,34 @@ select_best_desirability <- function(x, ..., eval_time = NULL) {
     ) |>
     # in case of ties
     dplyr::slice(1)
+}
+
+
+#' Make desirability columns from a desirability object
+#'
+#' @param x An object produced by [desirability()]
+#' @param dat A data frame
+#' @param call The execution environment of a currently running function.
+#' @return An updated version of `dat`
+#' @keywords internal
+#' @export
+make_desirability_cols <- function(x, dat, call = rlang::caller_env()) {
+
+  # Make individual scores:
+  d_nms <- make_col_names(x)
+  for (i in seq_along(x@translated)) {
+    tmp <- try(rlang::eval_tidy(x@translated[[i]], dat), silent = TRUE)
+    if (inherits(tmp, "try-error")) {
+      cli::cli_abort(
+        "An error occured when computing a desirability score: {tmp}.",
+        call = call
+      )
+    }
+    dat[[d_nms[i]]] <- tmp
+  }
+
+  dat |>
+    dplyr::mutate(
+      .d_overall = d_overall(dplyr::across(dplyr::starts_with(".d_")))
+    )
 }

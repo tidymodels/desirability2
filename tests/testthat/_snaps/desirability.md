@@ -19,13 +19,13 @@
       d1@translated
     Output
       [[1]]
-      d_max(a)
+      d_max(a, use_data = TRUE)
       
       [[2]]
-      d_min(b, scale = 2)
+      d_min(b, scale = 2, use_data = TRUE)
       
       [[3]]
-      d_box(x, low = 1, high = 2)
+      d_box(x, low = 1, high = 2, use_data = TRUE)
       
 
 ---
@@ -75,13 +75,13 @@
       d2@translated
     Output
       [[1]]
-      d_target(a, low = 1, target = 2, high = 3, scale_low = 2, use_data = TRUE)
+      d_target(a, low = 1, target = 2, high = 3, scale_low = 2)
       
       [[2]]
       d_category(b, categories = list(a = 0.1, b = 0.2, c = 0.3))
       
       [[3]]
-      d_box(x, low = 1, high = 2, use_data = TRUE)
+      d_box(x, low = 1, high = 2)
       
 
 ---

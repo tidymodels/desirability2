@@ -4,7 +4,7 @@
 \alias{desirability}
 \title{High-level interface to specifying desirability functions}
 \usage{
-desirability(..., .use_data = FALSE)
+desirability(..., .use_data = TRUE)
 }
 \arguments{
 \item{...}{using a goal function (see below) and the variable to be
