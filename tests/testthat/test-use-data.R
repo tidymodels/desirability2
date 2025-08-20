@@ -68,3 +68,24 @@ test_that('infinite values in data', {
     d_max(dat_inf, high = 2, use_data = TRUE)
   )
 })
+
+
+test_that('constant values in data', {
+
+  dat_same <- rep(.1, 10)
+
+  expect_equal(
+    d_max(dat_same, use_data = TRUE),
+    rep(1/2, length(dat_same))
+  )
+  expect_equal(
+    d_min(dat_same, use_data = TRUE),
+    rep(1/2, length(dat_same))
+  )
+  expect_equal(
+    d_box(dat_same, use_data = TRUE),
+    rep(1.0, length(dat_same))
+  )
+
+})
+

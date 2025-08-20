@@ -5,7 +5,11 @@
   
 * The `.use_data` default for `desirability()` was changed to `TRUE`. 
 
-* When `.use_data = TRUE`, infinite values are ignored when computing limits. 
+* When `use_data = TRUE` is used in the individual desirability functions
+
+   - Infinite values are ignored when computing limits. 
+   - The estimated low and/or high values are nudged in different directions to 
+     avoid them having the same value. 
 
 # desirability2 0.1.0
 

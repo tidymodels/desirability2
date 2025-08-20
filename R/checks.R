@@ -108,6 +108,8 @@ check_args <- function(
       if (is.numeric(x)) {
         x <- x[is.finite(x)]
       }
+      num_unique <- length(unique(x))
+
       if (length(x) == 0) {
         cli::cli_abort(
           "The data must have at least on finite and non-missing value.",
@@ -121,6 +123,13 @@ check_args <- function(
       )
       .fn <- switch(type, low = min, high = max, target = stats::median)
       arg <- .fn(x)
+      if (num_unique == 1) {
+        if (type == "low") {
+          arg <- arg -  2 * .Machine$double.eps
+        } else if (type == "high") {
+          arg <- arg +  2 * .Machine$double.eps
+        }
+      }
     } else {
       cli::cli_abort(
         "In {.fn {fn}}, argument {.arg {type}} is required when
