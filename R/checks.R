@@ -104,13 +104,23 @@ check_args <- function(
 ) {
   if (rlang::is_missing(arg)) {
     if (use_data) {
+      x <- x[!is.na(x)]
+      if (is.numeric(x)) {
+        x <- x[is.finite(x)]
+      }
+      if (length(x) == 0) {
+        cli::cli_abort(
+          "The data must have at least on finite and non-missing value.",
+          call = call
+        )
+      }
       type <- rlang::arg_match0(
         type,
         c("low", "high", "target"),
         error_call = call
       )
       .fn <- switch(type, low = min, high = max, target = stats::median)
-      arg <- .fn(x, na.rm = TRUE)
+      arg <- .fn(x)
     } else {
       cli::cli_abort(
         "In {.fn {fn}}, argument {.arg {type}} is required when

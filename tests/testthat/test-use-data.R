@@ -57,4 +57,14 @@ test_that('using data for bounds', {
 
 })
 
+test_that('infinite values in data', {
 
+  dat_inf <- dat
+  dat_inf[1] <- Inf
+  dat_inf[2] <- -Inf
+
+  expect_equal(
+    d_max(dat_inf, low = min(dat_inf[-(1:2)]), high = 2),
+    d_max(dat_inf, high = 2, use_data = TRUE)
+  )
+})

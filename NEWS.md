@@ -5,6 +5,8 @@
   
 * The `.use_data` default for `desirability()` was changed to `TRUE`. 
 
+* When `.use_data = TRUE`, infinite values are ignored when computing limits. 
+
 # desirability2 0.1.0
 
 * Transition from the magrittr pipe to the base R pipe.
