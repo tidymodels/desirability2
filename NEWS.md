@@ -1,4 +1,4 @@
-# desirability2 (development version)
+# desirability2 0.2.0
 
 * Export a helper function (`make_desirability_cols()`) to make it easier for 
   other packages to import and use desirability2. 
