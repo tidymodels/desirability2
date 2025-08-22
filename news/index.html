@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">desirability2</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,16 @@
       <small>Source: <a href="https://github.com/tidymodels/desirability2/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.0" id="desirability2-020">desirability2 0.2.0<a class="anchor" aria-label="anchor" href="#desirability2-020"></a></h2>
+<ul><li><p>Export a helper function (<code><a href="../reference/make_desirability_cols.html">make_desirability_cols()</a></code>) to make it easier for other packages to import and use desirability2.</p></li>
+<li><p>The <code>.use_data</code> default for <code><a href="../reference/desirability.html">desirability()</a></code> was changed to <code>TRUE</code>.</p></li>
+<li>
+<p>When <code>use_data = TRUE</code> is used in the individual desirability functions</p>
+<ul><li>Infinite values are ignored when computing limits.</li>
+<li>The estimated low and/or high values are nudged in different directions to avoid them having the same value.</li>
+</ul></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="desirability2-010">desirability2 0.1.0<a class="anchor" aria-label="anchor" href="#desirability2-010"></a></h2><p class="text-muted">CRAN release: 2025-07-22</p>
 <ul><li><p>Transition from the magrittr pipe to the base R pipe.</p></li>
